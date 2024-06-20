@@ -90,7 +90,7 @@ function SideChat({ chatId }: { chatId: string }) {
 </button>
 
     </div>
-    <div className="overflow-y-auto flex-grow p-3 mb-9 pb-20">
+    <div className="overflow-y-auto flex-grow h-96 p-3  ">
       {chatList.map((chat: InstructorChat) => (
         <div
           key={chat._id}
