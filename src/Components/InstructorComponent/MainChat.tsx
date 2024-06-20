@@ -127,7 +127,7 @@ scrollToBottom()
    
       </div>
       {receiver && (
-        <footer className=" border-t border-gray-300 p-5 absolute bottom-0 w-3/4 ">
+        <footer className=" p-5 absolute bottom-0 w-3/4 ">
         <div className="flex  justify-center">
             <button
               onClick={navigateTo}
