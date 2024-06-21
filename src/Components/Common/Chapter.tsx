@@ -1,8 +1,8 @@
 import EditChapter from "../InstructorComponent/EditChapter";
 
-function Chapter({ chapter,chapterLoad,setChapterLoad }: any) {
-  let { title, order, _id,} = chapter;
-  
+function Chapter({ chapter, chapterLoad, setChapterLoad }: any) {
+  let { title, order, _id, description } = chapter;
+
   return (
     <>
       <div className="font-semibold">
@@ -10,11 +10,12 @@ function Chapter({ chapter,chapterLoad,setChapterLoad }: any) {
         <div
           data-modal-target={`edit-chapter${_id}`}
           data-modal-toggle={`edit-chapter${_id}`}
-          className="cursor-pointer bg-blue-400 text-center rounded-md text-white"
+          className="cursor-pointer px-10 mt-3  border-2 border-green-400 text-center rounded-md text-base-100"
         >
           Edit
         </div>
         <EditChapter
+          description={description}
           title={title}
           order={order}
           id={chapter._id}

@@ -30,23 +30,14 @@ function AddChapters() {
     initFlowbite();
     fetchCourse(id);
   }, [loadCourse]);
-
-  const submit = async (courseData: Course) => {
-    const response = await instructorAPI.updateCOurse(id, courseData);
-    if (response.data.status) {
-      if (closeRef.current) {
-        closeRef.current.click();
-      }
-      setLoadCourse(!loadCourse);
-      toast.success(response.data.message);
-    }
-  };
   const {
-  
+   errors,
+   touched,
     values,
     handleChange,
     handleSubmit,
     setFieldValue,
+    handleBlur
   } = useFormik({
     initialValues: {
       name: course?.name,
@@ -56,12 +47,27 @@ function AddChapters() {
       questions: []
     },
     validationSchema: editCourseValidationSchema,
-    onSubmit: submit,
+    onSubmit: (courseData:Course) => {
+      instructorAPI.updateCOurse(id,courseData).then((res)=>{
+        if (res.data.status) {
+          if (closeRef.current) {
+            closeRef.current.click();
+          }
+          setLoadCourse(!loadCourse);
+          toast.success(res.data.message);
+        }
+      })
+    },
   });
 
+   
+useEffect(()=>{
+  get_Chapter(id);
+},[chapterLoad])
+  
   useEffect(() => {
     fetchCategory();
-    get_Chapter(id);
+  
 
     setFieldValue("name", course?.name);
     setFieldValue("price", course?.price);
@@ -70,7 +76,7 @@ function AddChapters() {
       typeof course?.category == "object" && course?.category._id
     );
     setFieldValue("description", course?.description || "");
-  }, [chapterLoad, lessonLoad, course]);
+  }, [ lessonLoad, course]);
 
   async function get_Chapter(id: string | undefined) {
     try {
@@ -117,20 +123,41 @@ function AddChapters() {
             }}
           >
             <div className="absolute top-3 left-2  ">
-              <button
+              {/* <button
                 onClick={() =>
                   navigate(`/instructor/enrollments/${course?._id}`)
                 }
                 className="btn bg-blue-700 text-white"
               >
                 Show Enrollments
-              </button>
+              </button> */}
+                 <button
+  onClick={() => navigate(-1)}
+  type="button"
+  className="flex items-center justify-center w-full sm:w-auto px-4 sm:px-5 py-2 text-sm sm:text-base text-gray-700 transition-colors duration-200 bg-base-100 border rounded-lg gap-x-2 dark:hover:bg-gray-800 dark:bg-gray-900  dark:text-gray-200 dark:border-gray-700"
+>
+  <svg
+    className="w-5 h-5 sm:w-6 sm:h-6 rtl:rotate-180 text-white"
+    xmlns="http://www.w3.org/2000/svg"
+    fill="none"
+    viewBox="0 0 24 24"
+    strokeWidth="1.5"
+    stroke="currentColor"
+  >
+    <path
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      d="M6.75 15.75L3 12m0 0l3.75-3.75M3 12h18"
+    />
+  </svg>
+  <span className="text-white font-Poppins">Go back</span>
+</button>
             </div>
             <div className="absolute top-3 right-2  ">
               <button
                 data-modal-target={`editcourse${course?._id}`}
                 data-modal-toggle={`editcourse${course?._id}`}
-                className="btn bg-red-700 text-white"
+                className="btn bg-gray-700 text-white"
               >
                 Edit
               </button>
@@ -171,54 +198,76 @@ function AddChapters() {
               <button
                 data-modal-target="crud-modal"
                 data-modal-toggle="crud-modal"
-                className="bg-blue-500 text-white px-5 font-bold rounded-lg py-2"
+                className="bg-base-100 text-white px-5 font-bold rounded-lg py-2"
               >
                 Add
               </button>
             </div>
           </div>
           {chapters?.map((chapter: chapter) => (
-            <div  className="bg-white shadow-lg rounded-md  ">
-              <div className="flex justify-between px-10 py-5 items-center mt-3">
-                <Chapter
-                  key={chapter._id}
-                  chapter={chapter}
-                  chapterLoad={chapterLoad}
-                  setChapterLoad={setChapterLoad}
-                />
-                <button
-                  onClick={() => setChapterId(chapter._id as string)}
-                  data-modal-target="add-lesson"
-                  data-modal-toggle="add-lesson"
-                  className="bg-blue-500 font-bold text-white px-5 rounded-lg py-2"
-                >
-                  Add lesson
-                </button>
-              </div>
-              <div className="flex-cols px-8 h-52 overflow-auto">
-                {chapter && chapter.lessons && chapter?.lessons.length > 0 ? (
-                  chapter?.lessons.map((lesson: any, lessonIndex: number) => (
-                    <>
-                      <Lesson
-                        lessonLoad={lessonLoad}
-                        setLessonLoad={setLessonLoad}
-                        chapterId={chapter._id}
-                        key={lessonIndex}
-                        lesson={lesson}
-                      />
-                    </>
-                  ))
-                ) : (
-                  <p>No lessons available for this chapter.</p>
-                )}
-              </div>
-              <AddLesson
-                lessonLoad={lessonLoad}
-                setLessonLoad={setLessonLoad}
-                chapterId={chapterId}
-              />
-            
-            </div>
+          <div className="bg-white shadow-lg rounded-md">
+          <div className="flex flex-col md:flex-row justify-between px-5 md:px-10 py-5 items-center mt-3">
+            <Chapter
+              key={chapter._id}
+              chapter={chapter}
+              chapterLoad={chapterLoad}
+              setChapterLoad={setChapterLoad}
+            />
+            <button
+              onClick={() => setChapterId(chapter._id as string)}
+              data-modal-target="add-lesson"
+              data-modal-toggle="add-lesson"
+              className="
+                bg-base-100
+                font-bold 
+                text-white 
+                px-5 
+                py-2 
+                rounded-lg 
+                md:px-6 
+                md:py-3 
+                lg:px-8 
+                lg:py-4 
+                text-sm 
+                md:text-base 
+                lg:text-lg 
+                transition 
+                duration-300 
+                ease-in-out 
+               
+                focus:outline-none 
+                focus:ring-2 
+              
+                focus:ring-opacity-75
+                mt-3 md:mt-0
+              "
+            >
+              Add lesson
+            </button>
+          </div>
+          <div className="flex flex-col px-5 md:px-8 h-52 overflow-auto">
+            {chapter && chapter.lessons && chapter?.lessons.length > 0 ? (
+              chapter?.lessons.map((lesson: any, lessonIndex: number) => (
+                <div key={lessonIndex} className="mb-2">
+                  <Lesson
+                    lessonLoad={lessonLoad}
+                    setLessonLoad={setLessonLoad}
+                    chapterId={chapter._id}
+                    lesson={lesson}
+                  />
+                </div>
+              ))
+            ) : (
+              <p>No lessons available for this chapter.</p>
+            )}
+          </div>
+          <AddLesson
+            lessonLoad={lessonLoad}
+            setLessonLoad={setLessonLoad}
+            chapterId={chapterId}
+          />
+        </div>
+        
           ))}
         </div>
       </div>
@@ -271,6 +320,7 @@ function AddChapters() {
                   </label>
                   <input
                     onChange={handleChange}
+                    onBlur={handleBlur}
                     type="text"
                     name="name"
                     id="name"
@@ -278,6 +328,7 @@ function AddChapters() {
                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                     placeholder="Type product name"
                   />
+                  {errors.name && touched.name && <p className="text-red-500">{errors.name}</p>}
                 </div>
                 <div className="col-span-2 sm:col-span-1">
                   <label
@@ -295,6 +346,7 @@ function AddChapters() {
                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                     placeholder="$2999"
                   />
+                   {errors.price && touched.price && <p className="text-red-500">{errors.price}</p>}
                 </div>
                 <div className="col-span-2 sm:col-span-1">
                   <label
@@ -309,6 +361,7 @@ function AddChapters() {
                     id="category"
                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                   >
+                    
                     {category?.map((cat) => (
                       <option
                         selected={
@@ -332,6 +385,7 @@ function AddChapters() {
                     Product Description
                   </label>
                   <textarea
+                  onBlur={handleBlur}
                     onChange={handleChange}
                     name="description"
                     value={values.description}
@@ -340,11 +394,12 @@ function AddChapters() {
                     className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     placeholder="Write product description here"
                   ></textarea>
+                   {errors.description && touched.description && <p className="text-red-500">{errors.description}</p>}
                 </div>
               </div>
               <button
                 type="submit"
-                className="text-white  inline-flex items-center bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-bold rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                className="text-white  bg-base-100 inline-flex items-center focus:ring-4 focus:outlin font-bold rounded-lg text-sm px-5 py-2.5 text-center "
               >
                 <svg
                   className="me-1 -ms-1 w-5 h-5"

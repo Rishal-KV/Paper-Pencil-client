@@ -32,7 +32,7 @@ export interface chapter {
   description:string;
   lessons?: any[];
   course?: Course;
-  order:number|undefined
+  order:number|string
   createdAt?: Date;
   updatedAt?: Date;
 }

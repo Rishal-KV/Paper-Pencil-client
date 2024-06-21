@@ -219,7 +219,11 @@ const instructorAPI = {
   },
   updateChapter: async (data: any) => {
     try {
+      console.log("called...");
+      
       let response = await axiosInstance.patch("/instructor/chapter", data);
+      console.log(response,"ressssssssssssssssss");
+      
       return response;
     } catch (error) {
       throw error;
@@ -313,7 +317,7 @@ const instructorAPI = {
     courseData: Course | undefined
   ) => {
     try {
-      const response = await axiosInstance.patch("/getspecific_course", {
+      const response = await axiosInstance.patch("/instructor/update_course", {
         courseData,
         courseId,
       });

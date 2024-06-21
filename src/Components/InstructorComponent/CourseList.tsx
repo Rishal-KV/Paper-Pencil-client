@@ -6,7 +6,6 @@ import _ from "lodash";
 import { Course } from "../../Interface/interfaces";
 import AddCourse from "./AddCourse";
 import { initFlowbite } from "flowbite";
-
 function CourseList() {
   const [load, setLoad] = useState(false);
   const [totalPage, setTotalPage] = useState<number>(0);
@@ -81,19 +80,23 @@ function CourseList() {
               <table className="min-w-full divide-y divide-gray-200">
                 <thead>
                   <tr>
-                    <th className="px-6 py-3  text-left text-xs font-medium text-black uppercase tracking-wider">
+                    <th className="px-6 py-3  text-left  font-lg text-black uppercase tracking-wider">
                       Name
                     </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-black uppercase tracking-wider">
+                    <th className="px-6 py-3 text-left text-lg font-lg text-black uppercase tracking-wider">
                       description
                     </th>
 
-                    <th className="px-6 py-3 text-left text-xs font-medium text-black uppercase tracking-wider">
+                    <th className="px-6 py-3 text-left text-lg font-lg text-black uppercase tracking-wider">
                       Status
                     </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-black uppercase tracking-wider">
+                    <th className="px-6 py-3 text-left text-lg font-lg text-black uppercase tracking-wider">
+                      Enrollments
+                    </th>
+                    <th className="px-6 py-3 text-left text-lg font-lg text-black uppercase tracking-wider">
                       Action
                     </th>
+                    
                   </tr>
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200">
@@ -114,6 +117,9 @@ function CourseList() {
                         >
                           {(course.listed as boolean) ? "active" : "not active"}
                         </span>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                       <button  onClick={()=>navigate(`/instructor/enrollments/${course._id}`)} className="btn text-white">View</button>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
                         <button onClick={()=>publish(course._id as string)} className="text-slate-800 hover:text-blue-600 text-sm bg-white hover:bg-slate-100 border border-slate-200 rounded-l-lg font-medium px-4 py-2 inline-flex space-x-1 items-center">

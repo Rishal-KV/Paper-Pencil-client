@@ -22,7 +22,6 @@ function ChatSide({ chatId }: { chatId: string }) {
 
   useEffect(() => {
     socket.emit("onlineStatus", studentId);
-    ``;
 
     const handleOnlineStatus = (onlineUsers: []) => {
       setInstructorOnline(onlineUsers);

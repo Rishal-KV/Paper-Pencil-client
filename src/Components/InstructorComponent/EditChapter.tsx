@@ -4,6 +4,7 @@ interface Chapter {
   id: string;
   chapterLoad?: boolean;
   setChapterLoad?: (value: boolean) => void;
+  description: string;
 }
 
 import { useEffect } from "react";
@@ -12,37 +13,25 @@ import { useFormik } from "formik";
 import instructorAPI from "../../API/instructor";
 import { toast } from "sonner";
 import { useRef } from "react";
+import { chapter } from "../../Interface/interfaces";
 function EditChapter({
   title,
   order,
   id,
+  description,
+
   chapterLoad,
   setChapterLoad,
 }: Chapter) {
-    const buttonRef = useRef<HTMLButtonElement | null>(null);
+  const buttonRef = useRef<HTMLButtonElement | null>(null);
   useEffect(() => {
     setFieldValue("title", title);
     setFieldValue("order", order);
     setFieldValue("id", id);
+    setFieldValue("description", description);
   }, []);
-  console.log(chapterLoad);
-  async function submit(data: Chapter) {
-    try {
-      let response = await instructorAPI.updateChapter(data);
-      if (response.data.status) {
-     
-         if (buttonRef) {
-            buttonRef.current?.click()
-         }
-       if (setChapterLoad) {
-        setChapterLoad(!chapterLoad)
-       }
-        toast.success(response.data.message);
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  }
+
+
   const {
     values,
     errors,
@@ -55,13 +44,29 @@ function EditChapter({
     initialValues: {
       title: title || "",
       order: order || "",
-      id: id,
-     
+      description: description || "",
+      _id: id,
     },
     validationSchema: chapterSchema,
-    onSubmit: submit,
+    onSubmit: (data: chapter) => {
+      console.log(data,"hmmm");
+      
+      instructorAPI.updateChapter(data).then((res) => {
+        if (res.data.status) {
+          if (buttonRef) {
+            buttonRef.current?.click();
+          }
+          if (setChapterLoad) {
+            setChapterLoad(!chapterLoad);
+          }
+          toast.success(res.data.message);
+        }
+      });
+    },
+    enableReinitialize : true
+    
   });
-
+  console.log(errors,"erros");
   return (
     <div
       id={`edit-chapter${id}`}
@@ -95,7 +100,9 @@ function EditChapter({
                   d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
                 />
               </svg>
-              <span ref={buttonRef} className="sr-only">Close modal</span>
+              <span ref={buttonRef} className="sr-only">
+                Close modal
+              </span>
             </button>
           </div>
           <form onSubmit={handleSubmit} className="p-4 md:p-5">
@@ -119,6 +126,28 @@ function EditChapter({
                 />
                 {errors.title && touched.title ? (
                   <p className="text-red-500">{errors.title}</p>
+                ) : (
+                  ""
+                )}
+              </div>
+              <div className="col-span-2">
+                <label
+                  htmlFor="description"
+                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                >
+                  Description
+                </label>
+                <textarea
+                  onBlur={handleBlur}
+                  value={values.description}
+                  onChange={handleChange}
+                  name="description"
+                  id="description"
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                  placeholder="Type chapter name"
+                />
+                {errors.description && touched.description ? (
+                  <p className="text-red-500">{errors.description}</p>
                 ) : (
                   ""
                 )}

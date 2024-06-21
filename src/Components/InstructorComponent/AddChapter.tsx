@@ -32,7 +32,7 @@ const AddChapter: React.FC<AddChapterProps> = ({ setChapter }) => {
     useFormik({
       initialValues: {
         title: "",
-        order: undefined,
+        order: 0,
         description: "",
       },
       validationSchema: chapterSchema,

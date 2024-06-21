@@ -1,15 +1,20 @@
-import * as Yup from "yup";
+import * as yup from 'yup';
 
-const signUpSchema = Yup.object().shape({
-  name: Yup.string().required("Name is required"),
-  email: Yup.string()
-    .email("Please enter a valid email")
-    .required("Email is required"),
-  password: Yup.string()
-    .required("Password is required")
-    .min(8, "Password must be at least 8 characters"),
-  confirmPassword: Yup.string()
-    .oneOf([Yup.ref("password")], "Passwords must match")
-    .required("Confirm Password is required"),
+const instructorSignUpSchema = yup.object().shape({
+    name: yup.string()
+        .trim() // Trim leading and trailing whitespace
+        .matches(/^\S.*\S$/, 'Name cannot be empty or consist solely of whitespace') // Ensures name is not empty or just spaces
+        .required('Name is required'),
+    email: yup.string()
+        .email('Invalid email')
+        .required('Email is required'),
+    password: yup.string()
+        .min(8, 'Password must be at least 8 characters')
+        .matches(/^\S.*\S$/, 'Password cannot be empty or consist solely of whitespace') // Ensures password is not empty or just spaces
+        .required('Password is required'),
+    confirmPassword: yup.string()
+        .oneOf([yup.ref('password')], 'Passwords must match')
+        .required('Confirm Password is required')
 });
-export default signUpSchema;
+
+export default instructorSignUpSchema;
