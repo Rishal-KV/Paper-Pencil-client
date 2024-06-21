@@ -3,20 +3,36 @@ import { faPlay, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 import { initFlowbite } from "flowbite";
 import { useEffect } from "react";
 import instructorAPI from "../../API/instructor";
-
-import { useState } from "react";
-import { ConfirmDialog } from "@hilla/react-components/ConfirmDialog.js";
+import { confirmAlert } from "react-confirm-alert";
+import 'react-confirm-alert/src/react-confirm-alert.css';
 function Lesson({ lesson, chapterId, lessonLoad, setLessonLoad }: any) {
-  const [dialogOpened, setDialogOpened] = useState(false);
   useEffect(() => {
     initFlowbite();
   }, []);
   async function click(lessonId: string, chapterId: string) {
     try {
-      let response = await instructorAPI.deleteLesson(lessonId, chapterId);
-      if (response.data.status) {
-        setLessonLoad(!lessonLoad);
-      }
+      confirmAlert({
+        title: "Confirm to submit",
+        message: "Are you sure to do this.",
+        buttons: [
+          {
+            label: "Yes",
+            onClick: async () => {
+              let response = await instructorAPI.deleteLesson(
+                lessonId,
+                chapterId
+              );
+              if (response.data.status) {
+                setLessonLoad(!lessonLoad);
+              }
+            },
+          },
+          {
+            label: "No",
+            onClick: () => null,
+          },
+        ],
+      });
     } catch (error) {
       console.log(error);
     }
@@ -24,7 +40,8 @@ function Lesson({ lesson, chapterId, lessonLoad, setLessonLoad }: any) {
 
   return (
     <div className="bg-gray-200 mt-2 py-2 px-3 rounded-md flex justify-between items-center">
-      <h1 className="text-black"
+      <h1
+        className="text-black"
         data-modal-target={`lesson-play${lesson._id}`}
         data-modal-toggle={`lesson-play${lesson._id}`}
       >
@@ -33,7 +50,7 @@ function Lesson({ lesson, chapterId, lessonLoad, setLessonLoad }: any) {
       </h1>
       <FontAwesomeIcon
         className="text-black"
-        onClick={() => setDialogOpened(true)}
+        onClick={() => click(lesson._id, chapterId)}
         icon={faTrashAlt}
       />
       <div
@@ -80,7 +97,7 @@ function Lesson({ lesson, chapterId, lessonLoad, setLessonLoad }: any) {
           </div>
         </div>
       </div>
-      <ConfirmDialog
+      {/* <ConfirmDialog
         header="Delete Lesson?"
         cancelButtonVisible
         confirmText="Delete"
@@ -92,7 +109,7 @@ function Lesson({ lesson, chapterId, lessonLoad, setLessonLoad }: any) {
         }}
       >
         Are you sure you want to permanently delete this item?
-      </ConfirmDialog>
+      </ConfirmDialog> */}
     </div>
   );
 }
