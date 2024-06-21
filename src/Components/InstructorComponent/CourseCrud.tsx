@@ -63,7 +63,7 @@ function AddChapters() {
    
 useEffect(()=>{
   get_Chapter(id);
-},[chapterLoad])
+},[chapterLoad,lessonLoad])
   
   useEffect(() => {
     fetchCategory();
@@ -76,7 +76,7 @@ useEffect(()=>{
       typeof course?.category == "object" && course?.category._id
     );
     setFieldValue("description", course?.description || "");
-  }, [ lessonLoad, course]);
+  }, [  course]);
 
   async function get_Chapter(id: string | undefined) {
     try {

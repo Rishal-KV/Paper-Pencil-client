@@ -10,7 +10,7 @@ import { StudentChat } from "../../Interface/interfaces";
 import { useNavigate } from "react-router-dom";
 import moment from "moment";
 function ChatSide({ chatId }: { chatId: string }) {
-  console.log(chatId, "cha");
+
 
   const [userInfo, setUserInfo] = useState<Instructor>();
   const [chatList, setChatList] = useState<StudentChat[]>([]);
@@ -18,7 +18,7 @@ function ChatSide({ chatId }: { chatId: string }) {
 
   const studentId = student.student?._id;
   const [instructorOnline, setInstructorOnline] = useState([]);
-  console.log(chatList, "chatList");
+  
 
   useEffect(() => {
     socket.emit("onlineStatus", studentId);
@@ -29,7 +29,7 @@ function ChatSide({ chatId }: { chatId: string }) {
 
     socket.on("onlineStatus", handleOnlineStatus);
 
-    console.log("call end");
+    
 
     return () => {
       socket.emit("offlineStatus", studentId);

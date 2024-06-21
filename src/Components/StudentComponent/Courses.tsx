@@ -63,14 +63,14 @@ function Courses({
   const handleCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedCategory(e.target.value);
     selectCategory(e);
-    console.log(e,"category");
+    
     
   };
 
   const handlePriceChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedPrice(e.target.value);
     selectPrice(e);
-    console.log(e,"price");
+   
     
   };
 
