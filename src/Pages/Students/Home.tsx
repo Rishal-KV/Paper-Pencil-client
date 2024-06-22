@@ -44,7 +44,7 @@ function Home() {
         <div className="flex justify-center mt-10 cursor-pointer">
           <div
             onClick={() => navigate("/courses")}
-            className=" bg-blue-400 text-white py-2 rounded-md   px-3"
+            className=" bg-blue-500 text-white py-2 rounded-md   px-3"
           >
             More Courses
           </div>

@@ -80,7 +80,7 @@ function Courses({
         {/* Filter Button for Mobile */}
         <button
           onClick={toggleSidebar}
-          className="block md:hidden bg-gray-800 text-white px-4 py-2 m-2 rounded-md"
+          className="block md:hidden bg-blue-500 text-white px-4 py-2 m-2 rounded-md"
         >
           {sidebarVisible ? "Hide Filters" : "Show Filters"}
         </button>
@@ -94,7 +94,7 @@ function Courses({
           <div className="max-w-sm mx-auto w-44 py-10">
             <button
               onClick={resetFilter}
-              className="inline-flex items-center px-4 py-2 bg-gray-500 text-white text-sm font-medium rounded-md"
+              className="inline-flex items-center px-4 py-2 bg-blue-500 text-white text-sm font-medium rounded-md"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -174,14 +174,16 @@ function Courses({
               <div>No courses found.</div>
             )}
           </div>
-          <div className="flex items-center justify-center">
+          {
+            courses.length > 0 &&  
+            <div className="flex items-center justify-center">
 
             
             <ul className="inline-flex">
               <li>
                 <button
                   onClick={() => setSelectedPage(1)}
-                  className="h-8 px-5 text-gray-400 font-bold transition-colors duration-15 border border-r-0 border-gray-500 rounded-l-lg focus:shadow-outline hover:bg-indigo-100"
+                  className="h-8 px-5 text-blue-400 font-bold transition-colors duration-15 border border-r-0 border-gray-500 rounded-l-lg focus:shadow-outline hover:bg-indigo-100"
                 >
                   First
                 </button>
@@ -204,7 +206,7 @@ function Courses({
                 {page !== totalPages ? (
                   <button
                     onClick={() => setSelectedPage((prev:number) => prev + 1)}
-                    className="h-8 px-5 text-indigo-600 font-bold transition-colors duration-150 bg-white border border-gray-500 rounded-r-lg focus:shadow-outline hover:bg-indigo-100"
+                    className="h-8 px-5 text-blue-400 font-bold transition-colors duration-150 bg-white border border-gray-500 rounded-r-lg focus:shadow-outline "
                   >
                     Next
                   </button>
@@ -214,6 +216,8 @@ function Courses({
               </li>
             </ul>
           </div>
+          }
+     
         </div>
       </div>
     </div>

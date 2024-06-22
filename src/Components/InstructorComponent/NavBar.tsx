@@ -22,10 +22,10 @@ function Navbar() {
   </div>
   <div className="flex-none">
     <div className="menu menu-horizontal p-0 md:block hidden">
-      <Link to="/instructor/" className="btn btn-ghost">Dashboard</Link>
-      <Link to="/instructor/courses" className="btn btn-ghost">Courses</Link>
-      <Link to="/instructor/chats" className="btn btn-ghost">Chats</Link>
-      <Link to="/instructor/questions" className="btn btn-ghost">Questions</Link>
+      <Link to="/instructor/" className="btn btn-ghost text-white">Dashboard</Link>
+      <Link to="/instructor/courses" className="btn btn-ghost text-white">Courses</Link>
+      <Link to="/instructor/chats" className="btn btn-ghost text-white">Chats</Link>
+      <Link to="/instructor/questions" className="btn btn-ghost text-white">Questions</Link>
     </div>
     <div className="dropdown dropdown-end">
       <div tabIndex={0} role="button" className="btn btn-ghost btn-circle md:hidden">
@@ -37,13 +37,13 @@ function Navbar() {
       </div>
       <div tabIndex={0} className="mt-3 z-50 card card-compact dropdown-content w-52 bg-base-100 shadow">
         <div className="card-body">
-          <Link to="/instructor/" className="btn  btn-ghost  tetx-white font-Poppins">Dashboard</Link>
+          <Link to="/instructor/" className="btn  btn-ghost  text-white font-Poppins">Dashboard</Link>
           <Link to="/instructor/courses" className="btn btn-ghost text-white font-Poppins">Courses</Link>
           <Link to="/instructor/chats" className="btn btn-ghost text-white font-Poppins">Chats</Link>
           <Link to="/instructor/questions" className="btn btn-ghost text-white font-Poppins">Questions</Link>
           <Link to="/instructor/profile" className="btn btn-ghost text-white font-Poppins">Profile</Link>
-          <Link to="/instructor/editprofile" className="btn text-white btn-ghost font-Poppins">profile Settings</Link>
-          <Link onClick={()=>localStorage.removeItem('instructorToken')} to="/instructor/login"className="btn btn-ghost font-Poppins">logout</Link>
+         
+          <Link onClick={()=>localStorage.removeItem('instructorToken')} to="/instructor/login"className="btn btn-ghost text-white font-Poppins">logout</Link>
         </div>
       </div>
     </div>

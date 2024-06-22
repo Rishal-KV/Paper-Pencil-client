@@ -48,7 +48,7 @@ function NavBar({ setSearch, courses }: Search) {
         <div className="flex justify-end items-center ">
 
         <div className="ml-14 md:px-5">
-        <FaRegHeart  className="text-blue-500" onClick={()=>navigate('/wishlist')} size={30}  />
+        <FaRegHeart  className="text-blue-400" onClick={()=>navigate('/wishlist')} size={30}  />
         </div>
 
       <div className="lg:flex sm:block hidden">
