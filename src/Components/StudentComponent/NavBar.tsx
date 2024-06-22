@@ -45,7 +45,7 @@ function NavBar({ setSearch, courses }: Search) {
         </div>
       ) : null}
       <div className="flex items-center justify-end">
-        <div className="mr-10">
+        <div className="flex justify-between">
           {/* <FaHeart
             onClick={() => navigate("/wishlist")}
             color="blue"
@@ -56,7 +56,7 @@ function NavBar({ setSearch, courses }: Search) {
         </div>
         <div className="lg:flex sm:block hidden">
           <Action student={student} onLogout={logOut} />
-        </div>
+        </div>        
       </div>
       <div className="md:hidden">
         <div onClick={() => setDropdownOpen(!dropdownOpen)}>
