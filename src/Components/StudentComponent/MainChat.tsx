@@ -84,7 +84,7 @@ function MainChat({
               } mb-4 cursor-pointer`}
               key={chats._id}
             >
-              <div  ref={messagesEndRef} className="w-9 h-9 rounded-full flex items-center justify-center mr-2">
+              <div  ref={messagesEndRef} className=" flex items-center justify-center ">
                 {/* <img
         src="https://placehold.co/200x/ffa8e4/ffffff.svg?text=ʕ•́ᴥ•̀ʔ&font=Lato"
         alt="User Avatar"
@@ -107,35 +107,34 @@ function MainChat({
                       Join the meet <FontAwesomeIcon icon={faVideo} />
                     </span>
                   </button> */}
-                  <div className="max-w-xl mx-auto bg-white rounded-lg shadow-lg p-8 mt-8">
-                    <h1 className="text-2xl font-bold text-gray-800 mb-4">
-                      {" "}
-                      Meet Link
-                    </h1>
-                    <p className="text-gray-600 mb-4">Hello,</p>
-                    <p className="text-gray-600 mb-4">
-                      You have received a Meet link. Please click the button
-                      below to join the meeting:
-                    </p>
-                    <a
-                      href={chats.text}
-                      className="bg-blue-500 text-white py-2 px-4 rounded-lg inline-block mt-4 hover:bg-blue-600"
-                    >
-                      Join Meeting
-                    </a>
-                    <p className="text-gray-600 mt-4">
-                      If the button above does not work, you can also copy and
-                      paste the following link into your browser:
-                    </p>
-                    <p className="text-gray-600">{chats.text}</p>
-                    <p className="text-gray-600 mt-4">Thank you!</p>
-                    <div className="text-xs py-3 text-gray-500 flex">
-                      {new Date(chats.createdAt).toLocaleTimeString()}
-                    </div>
-                  </div>
+       <div className="max-w-lg mx-auto bg-white rounded-lg shadow-lg p-4 sm:p-6 lg:p-8 mt-4 sm:mt-8">
+  <h1 className="text-lg sm:text-xl font-bold text-gray-800 mb-2 sm:mb-4">
+    Meet Link
+  </h1>
+  <p className="text-gray-600 mb-2 sm:mb-4 sm:block hidden">Hello,</p>
+  <p className="text-gray-600 mb-2 sm:mb-4 sm:block hidden">
+    You have received a Meet link. Please click the button below to join the meeting:
+  </p>
+  <a
+    href={chats.text}
+    className="bg-blue-500 text-white py-2 px-4 rounded-lg inline-block mt-2 sm:mt-4 hover:bg-blue-600 w-full text-center sm:w-auto"
+  >
+    Join Meeting
+  </a>
+  <p className="text-gray-600 mt-2 sm:mt-4 sm:block hidden">
+    If the button above does not work, you can also copy and paste the following link into your browser:
+  </p>
+  <p className="text-gray-600 break-words sm:block hidden">{chats.text}</p>
+  <p className="text-gray-600 mt-2 sm:mt-4 sm:block hidden">Thank you!</p>
+  <div className="text-xs py-2 sm:py-3 text-gray-500 flex">
+    {new Date(chats.createdAt).toLocaleTimeString()}
+  </div>
+</div>
+
+
                 </div>
               ) : (
-                <div className="flex flex-col max-w-96">
+                <div className="flex flex-col max-w-96 ">
                   <div className="bg-blue-400 rounded-lg p-3 mb-1">
                     <p className="text-white">{chats.text}</p>
                   </div>

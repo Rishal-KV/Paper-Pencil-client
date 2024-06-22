@@ -100,7 +100,7 @@ scrollToBottom()
               } mb-4 cursor-pointer`}
               key={chat._id}
             >
-              <div className="w-9 h-9 rounded-full flex items-center justify-center mr-2">
+              <div className=" rounded-full flex items-center justify-center ">
                 {/* <img
                 src={
                   instructor.instructor.imageUrl
