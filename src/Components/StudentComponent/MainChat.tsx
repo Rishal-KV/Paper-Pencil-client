@@ -28,22 +28,22 @@ function MainChat({
     });
   }, [conversationId]);
 
-  // useEffect(() => {
-  //   socket.on("newMessage", ({ newMessage }) => {
-  //     setConverstaion((prevMessages) => {
-  //       const messageIds = prevMessages.map((message) => message._id);
-  //       if (!messageIds.includes(newMessage._id)) {
-  //         return [...prevMessages, newMessage];
-  //       }
-  //       return prevMessages;
-  //     });
-  //   });
-  // }, []);
   useEffect(() => {
     socket.on("newMessage", ({ newMessage }) => {
-      setConverstaion((prevConversation) => [...prevConversation, newMessage]);
+      setConverstaion((prevMessages) => {
+        const messageIds = prevMessages.map((message) => message._id);
+        if (!messageIds.includes(newMessage._id)) {
+          return [...prevMessages, newMessage];
+        }
+        return prevMessages;
+      });
     });
   }, []);
+  // useEffect(() => {
+  //   socket.on("newMessage", ({ newMessage }) => {
+  //     setConverstaion((prevConversation) => [...prevConversation, newMessage]);
+  //   });
+  // }, []);
 
   const sendMess = (e: SyntheticEvent) => {
    
@@ -60,9 +60,9 @@ function MainChat({
   useEffect(()=>{
     scrollToBottom()
   },[conversation])
-  
+
   return (
-    <div className="flex-1 bg-white ">
+    <div className="flex flex-col h-screen bg-white ">
       {receiver && (
         <header className="bg-blue-400 p-4 text-gray-700">
           <h1 className="text-2xl font-semibold text-white">
@@ -71,7 +71,7 @@ function MainChat({
         </header>
       )}
 
-      <div  className="h-96 overflow-y-auto p-4 pb-44">
+      <div  className="flex-1 overflow-y-auto p-4 pb-44">
         {!receiver ? (
           <div className="flex h-96 justify-center items-center font-bold">
             <div  className="text-black">👈Select an instructor to chat with</div>
@@ -148,30 +148,10 @@ function MainChat({
           ))
         )}
 
-        {/* <div className="flex justify-center mt-32">
-            <button className="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-teal-300 to-lime-300 group-hover:from-teal-300 group-hover:to-lime-300 dark:text-white dark:hover:text-gray-900 focus:ring-4 focus:outline-none focus:ring-lime-200 dark:focus:ring-lime-800">
-  <span className="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
-  Join the meet <FontAwesomeIcon icon={faVideo}/>
-  </span>
-  </button>
-            </div> */}
-        {/* <div className="flex justify-end mb-4 cursor-pointer">
-          <div className="flex max-w-96 bg-indigo-500 text-white rounded-lg p-3 gap-3">
-            <p>
-              Hi Alice! I'm good, just finished a great book. How about you?
-            </p>
-          </div>
-          <div className="w-9 h-9 rounded-full flex items-center justify-center ml-2">
-            <img
-              src="https://placehold.co/200x/b7a8ff/ffffff.svg?text=ʕ•́ᴥ•̀ʔ&font=Lato"
-              alt="My Avatar"
-              className="w-8 h-8 rounded-full"
-            />
-          </div>
-        </div> */}
+       
       </div>
 {
-  receiver ?  <footer className="bg-white border-t border-gray-300 p-5  absolute bottom-0 w-3/4 ">
+  receiver ?  <footer className=" border-t border-gray-300 py-2   w-full ">
   {/* <div className=""> */}
   <form className="flex items-center" onSubmit={sendMess}>
     {/* <input

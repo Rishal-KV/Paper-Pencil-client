@@ -6,7 +6,7 @@ import { Student } from "../../Interface/interfaces";
 import { useNavigate } from "react-router-dom";
 import InputEmoji from "react-input-emoji";
 import { useRef } from "react";
-
+import { MdVideoCall } from "react-icons/md";
 
 function MainChat({
   receiver,
@@ -75,16 +75,17 @@ function MainChat({
 scrollToBottom()
  },[conversations])
   return (
-    <div className="flex-1 bg-white">
+    <div className="flex flex-col h-screen bg-white">
       {receiver && (
-        <header className="bg-base-100 p-4 text-gray-700">
+        <header className="bg-base-100 p-4 fle text-gray-700 flex  items-center justify-between">
           <h1 className="text-2x text-white font-semibold">
             {userInfo?.name.toUpperCase()}
           </h1>
+          <MdVideoCall onClick={navigateTo} size={40} color="white" />
         </header>
       )}
 
-      <div ref={messagesEndRef} className="h-96 overflow-y-auto p-4 pb-44">
+      <div ref={messagesEndRef} className="flex-1 overflow-y-auto p-4 pb-44">
         {!receiver ? (
           <div className="flex justify-center items-center h-96 font-bold ">
             <div  className="text-black">
@@ -127,8 +128,8 @@ scrollToBottom()
    
       </div>
       {receiver && (
-        <footer className=" p-5 absolute bottom-0 w-3/4 ">
-        <div className="flex  justify-center">
+        <footer className="border-t border-gray-300 py-2 px-2  w-full ">
+        {/* <div className="flex  justify-center">
             <button
               onClick={navigateTo}
               type="button"
@@ -146,7 +147,7 @@ scrollToBottom()
                 <path d="M17 10.5V7c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1v-3.5l2.29 2.29c.63.63 1.71.18 1.71-.71V8.91c0-.89-1.08-1.34-1.71-.71L17 10.5zM13 13h-2v2c0 .55-.45 1-1 1s-1-.45-1-1v-2H7c-.55 0-1-.45-1-1s.45-1 1-1h2V9c0-.55.45-1 1-1s1 .45 1 1v2h2c.55 0 1 .45 1 1s-.45 1-1 1z"></path>
               </svg>
             </button>
-          </div>
+          </div> */}
           <form className="flex items-center" onSubmit={sendMess}>
             {/* <input
               value={text}
