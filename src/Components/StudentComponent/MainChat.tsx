@@ -150,7 +150,7 @@ function MainChat({
        
       </div>
 {
-  receiver ?  <footer className=" border-t border-gray-300 py-2   w-full ">
+  receiver ?  <footer className=" border-t border-gray-300 py-2 px-4   w-full ">
   {/* <div className=""> */}
   <form className="flex items-center" onSubmit={sendMess}>
     {/* <input
