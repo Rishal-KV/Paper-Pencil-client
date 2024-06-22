@@ -45,17 +45,16 @@ function NavBar({ setSearch, courses }: Search) {
         </div>
       ) : null}
       <div className="flex items-center justify-end">
-        <div className="flex justify-between">
-          {/* <FaHeart
-            onClick={() => navigate("/wishlist")}
-            color="blue"
-            size={30}
-          /> */}
-          {/* <img onClick={()=>navigate('/wishlist')} width="35" height="35" src="https://img.icons8.com/material-outlined/24/like--v1.png" alt="like--v1"/> */}
-          <FaRegHeart onClick={()=>navigate('/wishlist')} size={30} color="black" />
+        <div className="flex justify-end items-center ">
+
+        <div className="  ml-36 md:px-5">
+        <FaRegHeart  className="text-blue-500" onClick={()=>navigate('/wishlist')} size={30}  />
         </div>
-        <div className="lg:flex sm:block hidden">
-          <Action student={student} onLogout={logOut} />
+
+      <div className="lg:flex sm:block hidden">
+        
+        <Action student={student} onLogout={logOut} />
+      </div>
         </div>        
       </div>
       <div className="md:hidden">

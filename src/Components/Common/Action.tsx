@@ -44,7 +44,7 @@ function Action({ student }: any) {
           <li><a onClick={logOut} >Logout</a></li>
         </ul>
       </div> : <div className="flex items-center justify-end gap-3">
-        <Link to="/login">  <p className="hidden  font-Poppins items-center justify-center rounded-xl bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 transition-all duration-150 hover:bg-gray-50 sm:inline-flex"
+        <Link to="/login">  <p className="hidden  font-Poppins items-center justify-center rounded-xl bg-white px-3 py-2 text-sm font-semibold text-blue-500 shadow-sm ring-1 ring-inset ring-blue-300 transition-all duration-150 hover:bg-gray-50 sm:inline-flex"
                     >Login</p></Link>
                
               
