@@ -70,7 +70,7 @@ function Dashboard() {
                 </div>
                 <div className="px-4 text-gray-700">
                   <h3 className="text-sm tracking-wider">Total Earnings</h3>
-                  <p className="text-3xl">{profit}</p>
+                  <p className="text-3xl">{Math.round(profit ? profit : 0)}</p>
                 </div>
               </div>
               <div className="flex items-center bg-white border rounded-sm overflow-hidden shadow">
