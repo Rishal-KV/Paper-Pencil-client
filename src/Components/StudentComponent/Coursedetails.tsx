@@ -153,20 +153,23 @@ function Coursedetails() {
                 <p className="mt-4 text-gray-600 text-lg">{course?.instructor?.about}</p>
              
             </div>
-            <div className="max-w-sm mx-auto overflow-hidden bg-white rounded-lg shadow-lg hover:shadow-blue-400">
-  <div className="relative py-3 px-3">
-    {
-      course?.instructor?.imageUrl &&   <img className="w-full h-48 rounded-md object-cover" src={course?.instructor?.imageUrl} alt="Profile Image"/>
-    }
-  
-  </div>
-  <div className="px-6 py-4">
-    <div className="text-xl font-semibold text-gray-800">{course?.instructor?.name}</div>
-  
-  </div>
- 
-
-</div>
+            {
+              course?.instructor?.imageUrl &&          <div className="max-w-sm mx-auto overflow-hidden bg-white rounded-lg shadow-lg hover:shadow-blue-400">
+              <div className="relative py-3 px-3">
+                {
+                  course?.instructor?.imageUrl &&   <img className="w-full h-48 rounded-md object-cover" src={course?.instructor?.imageUrl} alt="Profile Image"/>
+                }
+              
+              </div>
+              <div className="px-6 py-4">
+                <div className="text-xl font-semibold text-gray-800">{course?.instructor?.name}</div>
+              
+              </div>
+             
+            
+            </div>
+            }
+   
         </div>
     </div>
 </section>

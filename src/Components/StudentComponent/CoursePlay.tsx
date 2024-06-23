@@ -240,7 +240,7 @@ function CoursePlay() {
           {chapterData?.map((chapter) => (
             <div
               key={chapter._id}
-              className="md:w-auto px-3 py-2 shadow-md bg-gray-300 mt-2"
+              className="md:w-auto px-3 py-2 shadow-md bg-white-100 mt-2"
             >
               <div className="flex items-center justify-between">
                 <h1
