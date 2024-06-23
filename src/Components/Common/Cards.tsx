@@ -32,28 +32,35 @@ const Card: React.FC<CardProps> = ({
   const [chapters, setChapters] = useState<chapter[]>([]);
 
   useEffect(() => {
-    studentAPi.checkProgress(course._id, student.student?._id).then((res) => {
+  learning &&  studentAPi.checkProgress(course._id, student.student?._id).then((res) => {
       setProgress(res?.enrolledCourse);
     });
   }, [course?._id, student.student?._id]);
 
   const addToFavourite = async (courseId: string, studentId: string) => {
-    const res = await studentAPi.addToFavourite(courseId, studentId);
-    toast.success(res.message);
-    setLoad(!load);
-    if (setLoadFav) {
-      setLoadFav(!loadfav);
-    }
+   
+      
+      const res = await studentAPi.addToFavourite(courseId, studentId);
+      toast.success(res.message);
+      setLoad(!load);
+      if (setLoadFav) {
+        setLoadFav(!loadfav);
+      }
+  
+   
   };
 
   useEffect(() => {
-    studentAPi.fetchFavourite(student.student?._id).then((res) => {
-      setFavourite(res.favourites);
-    });
-
-    studentAPi.fetchChapter(course._id).then((res) => {
-      setChapters(res.data.chapters);
-    });
+    if (student.student) {
+      studentAPi.fetchFavourite(student.student?._id).then((res) => {
+        setFavourite(res.favourites);
+      });
+  
+      studentAPi.fetchChapter(course._id).then((res) => {
+        setChapters(res.data.chapters);
+      });
+    }
+  
   }, [load]);
 
   const isCourseInFavourites = (courseId: string) => {
@@ -129,11 +136,11 @@ const Card: React.FC<CardProps> = ({
           )}
           {!learning && (
             <FontAwesomeIcon
-              onClick={() => addToFavourite(course._id, student.student._id)}
+              onClick={() => student.student ?  addToFavourite(course._id, student.student._id) : navigate('/login')}
               className={`text-2xl text-blue-600 hover:cursor-pointer ${
-                isCourseInFavourites(course._id) ? "" : "text-regular"
+               student && isCourseInFavourites(course._id) ? "" : "text-regular"
               }`}
-              icon={isCourseInFavourites(course._id) ? faBookmark : farBookmark}
+              icon={student && isCourseInFavourites(course._id) ? faBookmark : farBookmark}
             />
           )}
         </div>

@@ -162,7 +162,7 @@ function Courses({
             {courses.length > 0 ? (
               courses.map((course: Course) => (
                 <div key={course._id} className="flex justify-start">
-                  <Card
+                  <Card key={course._id} 
                     favourites={false}
                     learning={false}
                     mycourse={false}
@@ -190,12 +190,13 @@ function Courses({
               </li>
               {courses && Array.from({ length: totalPages }, (_, index) => (
                 <li key={index + 1}>
+                  
                   <button
                     onClick={() => setSelectedPage(index + 1)}
                     className={`h-8 px-5 ${
                       index + 1 === page
                         ? "bg-blue-400 text-white"
-                        : "text-indigo-400"
+                        : "text-blue-400"
                     } font-bold transition-colors duration-150  border border-r-0 border-gray-500 focus:shadow-outline hover:bg-indigo-100`}
                   >
                     {index + 1}

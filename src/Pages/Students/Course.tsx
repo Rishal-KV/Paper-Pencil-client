@@ -11,7 +11,7 @@ function Course() {
   const [price, setPrice] = useState<string | undefined>("");
   const [totalPages, setTotalPages] = useState<number | null>(null);
   const [page, setPage] = useState<number | null>();
-  const [selectedPage, setSelectedPage] = useState<number>(0);
+  const [selectedPage, setSelectedPage] = useState<number>(1);
 
   const selectCategory: React.ChangeEventHandler<HTMLSelectElement> = async (
     e
@@ -47,11 +47,12 @@ function Course() {
       console.log(error);
     }
   };
+console.log(selectedPage,"---> sele");
 
   useEffect(() => {
     fetchCourse();
   }, [search, category, price, selectedPage]); // Include category in the dependency array
-  console.log(price, "---->",category);
+
   return (
     <>
       <NavBar setSearch={setSearch} courses="courses" />
