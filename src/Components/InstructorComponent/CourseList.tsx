@@ -59,7 +59,7 @@ function CourseList() {
   }, [load,page]);
 
   return (
-    <div className="h-screen bg-white ">
+    <div className="min-h-screen bg-white ">
       <div className="p-4  ">
         <div className="flex justify-between">
         <h1 className="text-2xl md:text-3xl pl-2 my-2 border-l-4  font-Poppins font-bold border-teal-400  text-gray-800">
@@ -101,7 +101,7 @@ function CourseList() {
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200">
                   {courses.map((course: Course) => (
-                    <tr>
+                    <tr key={course._id}>
                       <td className="px-6 py-4 whitespace-nowrap text-black">
                         {course.name}
                       </td>

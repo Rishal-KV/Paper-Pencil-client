@@ -20,7 +20,7 @@ const QuestionList: React.FC = () => {
   
 
   return (
-    <div className="h-screen bg-white ">
+    <div className="min-h-screen bg-white ">
       <div className="p-4  ">
       <h1 className="text-2xl md:text-3xl pl-2 my-2 border-l-4  font-Poppins font-bold border-teal-400  text-gray-800">
     Questions

@@ -17,8 +17,7 @@ import Chat from "../Pages/Students/Chat";
 import Favourite from "../Pages/Students/FavouritePage";
 import PurachseHistoryPage from "../Pages/Students/OrderHistoryPage";
 import NotFound from "../Pages/Students/NotFound";
-import EditProfilePage from "../Pages/Students/EditProfilePage";
-import ChangePasswordPage from "../Pages/Students/ChangePasswordPage";
+
 import { useSelector } from "react-redux";
 import { studentType } from "../Interface/interfaces";
 import { useEffect } from "react";
@@ -114,8 +113,7 @@ function StudentRoute() {
           </IsLoggedIn>
         }
       />
-      <Route path="/editprofile" element={<EditProfilePage />} />
-      <Route path="/changePassword" element={<ChangePasswordPage />} />
+    
       <Route path="*" Component={NotFound} />
     </Routes>
   );

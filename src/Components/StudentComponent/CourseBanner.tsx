@@ -72,14 +72,18 @@ function CourseBanner({
   };
   return (
     <div >
-      <div
-        className="h-96 w-full flex flex-col justify-center rounded-md"
-        style={{
-          backgroundImage: `linear-gradient(rgba(0, 0, 0, 1), rgba(0, 0, 0, 0.5)), url(${
-            coursedetails && coursedetails.image
-          })`,
-        }}
-      >
+     <div
+  className="w-auto flex flex-col justify-center rounded-md"
+  style={{
+    backgroundImage: `linear-gradient(rgba(0, 0, 0, 1), rgba(0, 0, 0, 0.5)), url(${coursedetails && coursedetails.image})`,
+    backgroundSize: "contain",
+    backgroundRepeat: "no-repeat",
+    backgroundPosition: "center",
+    height: "340px", // Adjust height as per your requirement
+    minHeight: "100%", // Ensure div takes full height of parent if needed
+  }}
+>
+
         <div className="px-10 py-5">
           <h1 className="text-white font-bold text-3xl">
             {coursedetails && coursedetails.name}

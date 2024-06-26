@@ -1,17 +1,13 @@
-import Profile from "../../Components/InstructorComponent/Profile"
+import Navbar from "../../Components/InstructorComponent/NavBar";
+import ProfileDetail from "../../Components/InstructorComponent/ProfileDetail";
 
-
-import Navbar from "../../Components/InstructorComponent/NavBar"
-import SideBar from "../../Components/InstructorComponent/SideBar"
 function ProfilePage() {
   return (
     <div>
-   <Navbar/>
-    
-<SideBar/>
-   <Profile/>
+      <Navbar />
+      <ProfileDetail />
     </div>
-  )
+  );
 }
 
-export default ProfilePage
+export default ProfilePage;

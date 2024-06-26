@@ -6,8 +6,6 @@ import studentAPi from "../../API/studentAPI";
 import { Instructor } from "../../Interface/interfaces";
 import InputEmoji from "react-input-emoji";
 
-
-
 function MainChat({
   receiver,
   conversationId,
@@ -44,22 +42,22 @@ function MainChat({
   //     setConverstaion((prevConversation) => [...prevConversation, newMessage]);
   //   });
   // }, []);
-
+   const navigateTo = (url:string) => {
+    window.open(url, '_blank');
+   }
   const sendMess = (e: SyntheticEvent) => {
-   
     e.preventDefault();
-    
 
     socket.emit("sendMessage", { text, sender, receiver });
     setText("");
   };
-  const messagesEndRef = useRef<HTMLDivElement>(null)
+  const messagesEndRef = useRef<HTMLDivElement>(null);
   const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
-  useEffect(()=>{
-    scrollToBottom()
-  },[conversation])
+  useEffect(() => {
+    scrollToBottom();
+  }, [conversation]);
 
   return (
     <div className="flex flex-col h-screen bg-white ">
@@ -71,10 +69,12 @@ function MainChat({
         </header>
       )}
 
-      <div  className="flex-1 overflow-y-auto p-4 pb-44">
+      <div className="flex-1 overflow-y-auto p-4 pb-44">
         {!receiver ? (
           <div className="flex h-96 justify-center items-center font-bold">
-            <div  className="text-black">👈Select an instructor to chat with</div>
+            <div className="text-black">
+              👈Select an instructor to chat with
+            </div>
           </div>
         ) : (
           conversation.map((chats: any) => (
@@ -84,7 +84,10 @@ function MainChat({
               } mb-4 cursor-pointer`}
               key={chats._id}
             >
-              <div  ref={messagesEndRef} className=" flex items-center justify-center ">
+              <div
+                ref={messagesEndRef}
+                className=" flex items-center justify-center "
+              >
                 {/* <img
         src="https://placehold.co/200x/ffa8e4/ffffff.svg?text=ʕ•́ᴥ•̀ʔ&font=Lato"
         alt="User Avatar"
@@ -107,31 +110,37 @@ function MainChat({
                       Join the meet <FontAwesomeIcon icon={faVideo} />
                     </span>
                   </button> */}
-       <div className="max-w-lg mx-auto bg-white rounded-lg shadow-lg p-4 sm:p-6 lg:p-8 mt-4 sm:mt-8">
-  <h1 className="text-lg sm:text-xl font-bold text-gray-800 mb-2 sm:mb-4">
-    Meet Link
-  </h1>
-  <p className="text-gray-600 mb-2 sm:mb-4 sm:block hidden">Hello,</p>
-  <p className="text-gray-600 mb-2 sm:mb-4 sm:block hidden">
-    You have received a Meet link. Please click the button below to join the meeting:
-  </p>
-  <a
-    href={chats.text}
-    className="bg-blue-500 text-white py-2 px-4 rounded-lg inline-block mt-2 sm:mt-4 hover:bg-blue-600 w-full text-center sm:w-auto"
-  >
-    Join Meeting
-  </a>
-  <p className="text-gray-600 mt-2 sm:mt-4 sm:block hidden">
-    If the button above does not work, you can also copy and paste the following link into your browser:
-  </p>
-  <p className="text-gray-600 break-words sm:block hidden">{chats.text}</p>
-  <p className="text-gray-600 mt-2 sm:mt-4 sm:block hidden">Thank you!</p>
-  <div className="text-xs py-2 sm:py-3 text-gray-500 flex">
-    {new Date(chats.createdAt).toLocaleTimeString()}
-  </div>
-</div>
-
-
+                  <div className="max-w-lg mx-auto bg-white rounded-lg shadow-lg p-4 sm:p-6 lg:p-8 mt-4 sm:mt-8">
+                    <h1 className="text-lg sm:text-xl font-bold text-gray-800 mb-2 sm:mb-4">
+                      Meet Link
+                    </h1>
+                    <p className="text-gray-600 mb-2 sm:mb-4 sm:block hidden">
+                      Hello,
+                    </p>
+                    <p className="text-gray-600 mb-2 sm:mb-4 sm:block hidden">
+                      You have received a Meet link. Please click the button
+                      below to join the meeting:
+                    </p>
+                    <p
+                      onClick={()=> navigateTo(chats.text)}
+                      className="bg-blue-500 text-white py-2 px-4 rounded-lg inline-block mt-2 sm:mt-4 hover:bg-blue-600 w-full text-center sm:w-auto"
+                    >
+                      Join Meeting
+                    </p>
+                    <p className="text-gray-600 mt-2 sm:mt-4 sm:block hidden">
+                      If the button above does not work, you can also copy and
+                      paste the following link into your browser:
+                    </p>
+                    <p className="text-gray-600 break-words sm:block hidden">
+                      {chats.text}
+                    </p>
+                    <p className="text-gray-600 mt-2 sm:mt-4 sm:block hidden">
+                      Thank you!
+                    </p>
+                    <div className="text-xs py-2 sm:py-3 text-gray-500 flex">
+                      {new Date(chats.createdAt).toLocaleTimeString()}
+                    </div>
+                  </div>
                 </div>
               ) : (
                 <div className="flex flex-col max-w-96 ">
@@ -146,45 +155,40 @@ function MainChat({
             </div>
           ))
         )}
-
-       
       </div>
-{
-  receiver ?  <footer className=" border-t border-gray-300 py-2 px-4   w-full ">
-  {/* <div className=""> */}
-  <form className="flex items-center" onSubmit={sendMess}>
-    {/* <input
+      {receiver ? (
+        <footer className=" border-t border-gray-300 py-2 px-4   w-full ">
+          {/* <div className=""> */}
+          <form className="flex items-center" onSubmit={sendMess}>
+            {/* <input
       value={text}
       onChange={(e) => setText(e.target.value)}
       placeholder="Type a message..."
       className="w-full p-2 rounded-md border border-gray-400 focus:outline-none focus:border-blue-500"
     /> */}
-    <InputEmoji
-      value={text}
-      onChange={setText}
-  
-      placeholder="Type a message"
-      shouldReturn={false}
-      shouldConvertEmojiToImage={false}
-    />
+            <InputEmoji
+              value={text}
+              onChange={setText}
+              placeholder="Type a message"
+              shouldReturn={false}
+              shouldConvertEmojiToImage={false}
+            />
 
-    {
-      text &&   <button
-      type="submit"
-      className="bg-indigo-500 text-white px-4 py-2  rounded-md ml-2"
-    >
-      Send
-    </button>
-    }
-  
-  </form>
-  {/* </div> */}
-</footer> : ""
-}
-     
-    
+            {text && (
+              <button
+                type="submit"
+                className="bg-indigo-500 text-white px-4 py-2  rounded-md ml-2"
+              >
+                Send
+              </button>
+            )}
+          </form>
+          {/* </div> */}
+        </footer>
+      ) : (
+        ""
+      )}
     </div>
-   
   );
 }
 

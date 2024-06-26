@@ -1,13 +1,12 @@
 import Lesson from "./Lesson";
 import Chapter from "../Common/Chapter";
-import {  useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
 import AddLesson from "../Common/AddLesson";
 import instructorAPI from "../../API/instructor";
 import { initFlowbite } from "flowbite";
 import AddChapter from "./AddChapter";
 import { chapter } from "../../Interface/interfaces";
-import { toUpper } from "lodash";
 import { Course } from "../../Interface/interfaces";
 import { category } from "../../Interface/interfaces";
 import studentAPi from "../../API/studentAPI";
@@ -15,6 +14,7 @@ import editCourseValidationSchema from "../../Validations/Instructor/editCourseV
 import { useFormik } from "formik";
 import { toast } from "sonner";
 import { RefObject } from "react";
+import CropperModal from "./CropperModal";
 function AddChapters() {
   const [chapterId, setChapterId] = useState("");
   const [chapters, setChapter] = useState<chapter[]>([]);
@@ -24,50 +24,55 @@ function AddChapters() {
   const [category, setCategory] = useState<category[]>();
   const [loadCourse, setLoadCourse] = useState<boolean>(false);
   const closeRef: RefObject<HTMLButtonElement> = useRef(null);
-  const navigate = useNavigate();
+  const [select, setSelectedImage] = useState<File | undefined>();
+  const [croppedImage, setCroppedImage] = useState<File | undefined | Blob>(
+    undefined
+  );
+  const [modalStatus, setStatus] = useState<Boolean>(false);
   let { id } = useParams();
   useEffect(() => {
     initFlowbite();
     fetchCourse(id);
   }, [loadCourse]);
   const {
-   errors,
-   touched,
+    errors,
+    touched,
     values,
     handleChange,
     handleSubmit,
     setFieldValue,
-    handleBlur
+    handleBlur,
   } = useFormik({
     initialValues: {
       name: course?.name,
       price: course?.price,
       category: "" || course?.category,
       description: course?.description,
-      questions: []
+      questions: [],
     },
     validationSchema: editCourseValidationSchema,
-    onSubmit: (courseData:Course) => {
-      instructorAPI.updateCOurse(id,courseData).then((res)=>{
-        if (res.data.status) {
+    onSubmit: (courseData: Course) => {
+      instructorAPI.updateCOurse(id, courseData).then((res) => {
+        if (res?.data.status) {
           if (closeRef.current) {
             closeRef.current.click();
           }
           setLoadCourse(!loadCourse);
-          toast.success(res.data.message);
+          toast.success(res?.data.message);
         }
-      })
+      });
     },
   });
 
-   
-useEffect(()=>{
-  get_Chapter(id);
-},[chapterLoad,lessonLoad])
-  
+  function onCLoseModal() {
+    setCroppedImage(undefined);
+  }
+  useEffect(() => {
+    get_Chapter(id);
+  }, [chapterLoad, lessonLoad]);
+
   useEffect(() => {
     fetchCategory();
-  
 
     setFieldValue("name", course?.name);
     setFieldValue("price", course?.price);
@@ -76,7 +81,7 @@ useEffect(()=>{
       typeof course?.category == "object" && course?.category._id
     );
     setFieldValue("description", course?.description || "");
-  }, [  course]);
+  }, [course]);
 
   async function get_Chapter(id: string | undefined) {
     try {
@@ -98,6 +103,21 @@ useEffect(()=>{
       console.log(error);
     }
   };
+  const imageRef = useRef<HTMLInputElement>(null);
+  function selectImage() {
+    if (imageRef.current) {
+      imageRef.current.click();
+    }
+  }
+
+  const changeImage = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target && event.target.files && event.target.files[0]) {
+      const selectedFile = event.target.files[0];
+      setSelectedImage(selectedFile);
+      setStatus(true);
+      setCroppedImage(undefined);
+    }
+  };
 
   const fetchCategory = async () => {
     try {
@@ -109,87 +129,107 @@ useEffect(()=>{
       console.log(error);
     }
   };
+  console.log(croppedImage, "slecttt");
 
   return (
-    <div className="bg-gray-100 ">
+    <div className="bg-gray-100 min-h-screen ">
       <div className="p-4 ">
-        <div className="border-1   h-full p-10 ">
-          <div
-            className="h-96 w-full flex flex-col justify-center rounded-md relative"
-            style={{
-              backgroundImage: `linear-gradient(rgba(0, 0, 0, 1), rgba(0, 0, 0, 0.5)), url(${
-                course && course?.image
-              })`,
-            }}
+        <div className="border-1   h-ful p-10 ">
+          <div className="grid grid-cols-1 sm:grid-cols-1 ">
+            {/* Column for the image */}
+            {/* <div className="h-96 w-full flex flex-col justify-center rounded-md relative"> */}
+            {/* <div
+      className="h-full w-full bg-cover bg-center rounded-md"
+      style={{
+        backgroundImage: `linear-gradient(rgba(0, 0, 0, 1), rgba(0, 0, 0, 0.5)), url(${course && course?.image})`,
+      }}
+    >
+      <div className="absolute top-3 left-2">
+        <button
+          onClick={() => navigate(-1)}
+          type="button"
+          className="flex items-center justify-center w-full sm:w-auto px-4 sm:px-5 py-2 text-sm sm:text-base text-gray-700 transition-colors duration-200 bg-base-100 border rounded-lg gap-x-2 dark:hover:bg-gray-800 dark:bg-gray-900 dark:text-gray-200 dark:border-gray-700"
+        >
+          <svg
+            className="w-5 h-5 sm:w-6 sm:h-6 rtl:rotate-180 text-white"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth="1.5"
+            stroke="currentColor"
           >
-            <div className="absolute top-3 left-2  ">
-              {/* <button
-                onClick={() =>
-                  navigate(`/instructor/enrollments/${course?._id}`)
-                }
-                className="btn bg-blue-700 text-white"
-              >
-                Show Enrollments
-              </button> */}
-                 <button
-  onClick={() => navigate(-1)}
-  type="button"
-  className="flex items-center justify-center w-full sm:w-auto px-4 sm:px-5 py-2 text-sm sm:text-base text-gray-700 transition-colors duration-200 bg-base-100 border rounded-lg gap-x-2 dark:hover:bg-gray-800 dark:bg-gray-900  dark:text-gray-200 dark:border-gray-700"
->
-  <svg
-    className="w-5 h-5 sm:w-6 sm:h-6 rtl:rotate-180 text-white"
-    xmlns="http://www.w3.org/2000/svg"
-    fill="none"
-    viewBox="0 0 24 24"
-    strokeWidth="1.5"
-    stroke="currentColor"
-  >
-    <path
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      d="M6.75 15.75L3 12m0 0l3.75-3.75M3 12h18"
-    />
-  </svg>
-  <span className="text-white font-Poppins">Go back</span>
-</button>
-            </div>
-            <div className="absolute top-3 right-2  ">
-              <button
-                data-modal-target={`editcourse${course?._id}`}
-                data-modal-toggle={`editcourse${course?._id}`}
-                className="btn bg-gray-700 text-white"
-              >
-                Edit
-              </button>
-            </div>
-            <div className="px-4">
-              <p className="font-bold text-white">Title : </p>
-              <h1 className="font-extrabold text-2xl text-white">
-                {course && toUpper(course?.name)}
-              </h1>
-            </div>
-            <div className="px-4 mt-4">
-              <p className="font-bold text-white">Catgeory : </p>
-              <h1 className="font-semibold text-md text-white">
-                {chapters &&
-                  typeof course?.category === "object" &&
-                  course?.category.name &&
-                  toUpper(course?.category.name)}
-              </h1>
-            </div>
-            <div className="px-4 mt-4">
-              <p className="font-bold text-white">Price : </p>
-              <h1 className="font-semibold text-md text-white">
-                {chapters && course?.price}
-              </h1>
-            </div>
-            <div className="px-4 mt-4">
-              <p className="font-bold text-white">Description : </p>
-              <h1 className="font-semibold text-md text-white">
-                {chapters && course?.description}
-              </h1>
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M6.75 15.75L3 12m0 0l3.75-3.75M3 12h18"
+            />
+          </svg>
+          <span className="text-white font-Poppins">Go back</span>
+        </button>
+      </div>
+      <div className="absolute top-3 right-2">
+        <button
+          data-modal-target={`editcourse${course?._id}`}
+          data-modal-toggle={`editcourse${course?._id}`}
+          className="btn bg-gray-700 text-white"
+        >
+          Edit
+        </button>
+      </div>
+      <div className="px-4">
+        <p className="font-bold text-white">Title :</p>
+        <h1 className="font-extrabold text-2xl text-white">
+          {course && toUpper(course?.name)}
+        </h1>
+      </div>
+    </div>
+  </div> */}
+
+            <div className="relative flex w-full flex-col  md:flex-row rounded-xl bg-white bg-clip-border text-gray-700 shadow-md">
+              <div className="relative m-0  md:w-2/5   shrink-0 overflow-hidden rounded-xl md:rounded-r-none bg-white bg-clip-border text-gray-700">
+                <img
+                  src={typeof course?.image === "string" ? course.image : ""}
+                  alt="Course Image"
+                />
+              </div>
+              <div className="p-6">
+                {/* <h6 className="mb-4 block font-sans text-base font-semibold uppercase leading-relaxed tracking-normal text-pink-500 antialiased">
+        {course?.name}
+      </h6> */}
+                <h4 className="mb-2 block font-Poppins text-2xl font-semibold leading-snug tracking-normal text-blue-gray-900 antialiased">
+                  {course && course.name}
+                </h4>
+                <p className="mb-8 block font-popins text-base font-normal leading-relaxed text-gray-700 antialiased">
+                  {course?.description}
+                </p>
+
+                <button
+                  className="flex select-none items-center gap-2 rounded-lg py-3 px-6 text-center align-middle font-sans text-xs font-bold uppercase text-base-100 transition-all hover:bg-base-100 hover:text-white  disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+                  type="button"
+                  data-modal-target={`editcourse${course?._id}`}
+                  data-modal-toggle={`editcourse${course?._id}`}
+                >
+                  Edit
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="2"
+                    stroke="currentColor"
+                    aria-hidden="true"
+                    className="h-4 w-4"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M16.862 3.038a2.727 2.727 0 0 1 3.846 3.846L7.965 19.627a1.364 1.364 0 0 1-.568.347l-4.09 1.17a.273.273 0 0 1-.338-.338l1.17-4.09a1.364 1.364 0 0 1 .347-.568L16.862 3.038z"
+                    />
+                  </svg>
+                </button>
+              </div>
             </div>
           </div>
+
           <div className="bg-white shadow-lg flex justify-between px-10 py-5 items-center mt-3">
             <div>
               <h1 className="font-bold text-black">Add Chapter</h1>
@@ -205,69 +245,45 @@ useEffect(()=>{
             </div>
           </div>
           {chapters?.map((chapter: chapter) => (
-          <div className="bg-white shadow-lg rounded-md">
-          <div className="flex flex-col md:flex-row justify-between px-5 md:px-10 py-5 items-center mt-3">
-            <Chapter
-              key={chapter._id}
-              chapter={chapter}
-              chapterLoad={chapterLoad}
-              setChapterLoad={setChapterLoad}
-            />
-            <button
-              onClick={() => setChapterId(chapter._id as string)}
-              data-modal-target="add-lesson"
-              data-modal-toggle="add-lesson"
-              className="
-                bg-base-100
-                font-bold 
-                text-white 
-                px-5 
-                py-2 
-                rounded-lg 
-                md:px-6 
-                md:py-3 
-                lg:px-8 
-                lg:py-4 
-                text-sm 
-                md:text-base 
-                lg:text-lg 
-                transition 
-                duration-300 
-                ease-in-out 
-               
-                focus:outline-none 
-                focus:ring-2 
-              
-                focus:ring-opacity-75
-                mt-3 md:mt-0
-              "
-            >
-              Add lesson
-            </button>
-          </div>
-          <div className="flex flex-col px-5 md:px-8 h-52 overflow-auto">
-            {chapter && chapter.lessons && chapter?.lessons.length > 0 ? (
-              chapter?.lessons.map((lesson: any, lessonIndex: number) => (
-                <div key={lessonIndex} className="mb-2">
-                  <Lesson
-                    lessonLoad={lessonLoad}
-                    setLessonLoad={setLessonLoad}
-                    chapterId={chapter._id}
-                    lesson={lesson}
-                  />
-                </div>
-              ))
-            ) : (
-              <p>No lessons available for this chapter.</p>
-            )}
-          </div>
-          <AddLesson
-            lessonLoad={lessonLoad}
-            setLessonLoad={setLessonLoad}
-            chapterId={chapterId}
-          />
-        </div>
-        
+            <div className="bg-white shadow-lg rounded-md">
+              <div className="flex flex-col md:flex-row justify-between px-5 md:px-10 py-5 items-center mt-3">
+                <Chapter
+                  key={chapter._id}
+                  chapter={chapter}
+                  chapterLoad={chapterLoad}
+                  setChapterLoad={setChapterLoad}
+                />
+                <button
+                  onClick={() => setChapterId(chapter._id as string)}
+                  data-modal-target="add-lesson"
+                  data-modal-toggle="add-lesson"
+                  className="btn btn-base text-white font-Poppins"
+                >
+                  Add lesson
+                </button>
+              </div>
+              <div className="flex flex-col px-5 md:px-8 h-52 overflow-auto">
+                {chapter && chapter.lessons && chapter?.lessons.length > 0 ? (
+                  chapter?.lessons.map((lesson: any, lessonIndex: number) => (
+                    <div key={lessonIndex} className="mb-2">
+                      <Lesson
+                        lessonLoad={lessonLoad}
+                        setLessonLoad={setLessonLoad}
+                        chapterId={chapter._id}
+                        lesson={lesson}
+                      />
+                    </div>
+                  ))
+                ) : (
+                  <p>No lessons available for this chapter.</p>
+                )}
+              </div>
+              <AddLesson
+                lessonLoad={lessonLoad}
+                setLessonLoad={setLessonLoad}
+                chapterId={chapterId}
+              />
+            </div>
           ))}
         </div>
       </div>
@@ -285,6 +301,7 @@ useEffect(()=>{
                 Edit Course
               </h3>
               <button
+                onClick={onCLoseModal}
                 ref={closeRef}
                 type="button"
                 className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
@@ -328,7 +345,9 @@ useEffect(()=>{
                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                     placeholder="Type product name"
                   />
-                  {errors.name && touched.name && <p className="text-red-500">{errors.name}</p>}
+                  {errors.name && touched.name && (
+                    <p className="text-red-500">{errors.name}</p>
+                  )}
                 </div>
                 <div className="col-span-2 sm:col-span-1">
                   <label
@@ -346,7 +365,9 @@ useEffect(()=>{
                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                     placeholder="$2999"
                   />
-                   {errors.price && touched.price && <p className="text-red-500">{errors.price}</p>}
+                  {errors.price && touched.price && (
+                    <p className="text-red-500">{errors.price}</p>
+                  )}
                 </div>
                 <div className="col-span-2 sm:col-span-1">
                   <label
@@ -361,9 +382,9 @@ useEffect(()=>{
                     id="category"
                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                   >
-                    
                     {category?.map((cat) => (
                       <option
+                        key={cat._id}
                         selected={
                           typeof course?.category == "object" &&
                           course?.category?.name == cat.name
@@ -378,6 +399,35 @@ useEffect(()=>{
                   </select>
                 </div>
                 <div className="col-span-2">
+                  <figure className="max-w-lg">
+                    <label
+                      htmlFor="price"
+                      className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                    >
+                      Image
+                    </label>
+
+                    <img
+                      onClick={selectImage}
+                      className="h-auto max-w-full rounded-lg"
+                      src={
+                        croppedImage
+                          ? URL.createObjectURL(croppedImage as File)
+                          : course
+                          ? course.image
+                          : ""
+                      }
+                      alt="image description"
+                    />
+                  </figure>
+                  <input
+                    onChange={changeImage}
+                    ref={imageRef}
+                    type="file"
+                    hidden
+                  />
+                </div>
+                <div className="col-span-2">
                   <label
                     htmlFor="description"
                     className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
@@ -385,7 +435,7 @@ useEffect(()=>{
                     Product Description
                   </label>
                   <textarea
-                  onBlur={handleBlur}
+                    onBlur={handleBlur}
                     onChange={handleChange}
                     name="description"
                     value={values.description}
@@ -394,7 +444,9 @@ useEffect(()=>{
                     className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     placeholder="Write product description here"
                   ></textarea>
-                   {errors.description && touched.description && <p className="text-red-500">{errors.description}</p>}
+                  {errors.description && touched.description && (
+                    <p className="text-red-500">{errors.description}</p>
+                  )}
                 </div>
               </div>
               <button
@@ -418,6 +470,14 @@ useEffect(()=>{
             </form>
           </div>
         </div>
+        <CropperModal
+          modalStatus={modalStatus}
+          setFieldValue={setFieldValue}
+          setCroppedImage={setCroppedImage}
+          setStatus={setStatus}
+          setValue={setSelectedImage}
+          value={select}
+        />
       </div>
     </div>
   );

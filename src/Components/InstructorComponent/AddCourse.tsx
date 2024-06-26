@@ -3,52 +3,64 @@ import React, { useRef } from "react";
 import { useState, useEffect } from "react";
 import { toast } from "sonner";
 import instructorAPI from "../../API/instructor";
-import { FileInputButton, ExtFile, FileCard } from "@files-ui/react";
 
+import "cropperjs/dist/cropper.css";
 import { PulseLoader } from "react-spinners";
+import { useFormik } from "formik";
+import CropperModal from "./CropperModal";
 
-import {  useFormik } from "formik";
+function AddCourse({
+  setLoad,
+  load,
+}: {
+  setLoad: (value: boolean) => void;
+  load: boolean;
+}) {
+  const closeRef = useRef<HTMLButtonElement>(null);
 
-
-function AddCourse({setLoad,load}:{setLoad : (value:boolean)=> void;load:boolean}) {
-  const closeRef = useRef<HTMLButtonElement>(null)
-  
   const reset = () => {
-    resetForm()
-  }
+    resetForm();
+    setCroppedImage(undefined); // Clear cropped image on form reset
+  };
 
   const [loading, setLoading] = useState(false);
   const [category, setCategory] = useState([]);
+  const [value, setValue] = useState<File | undefined>(undefined);
+  const [croppedImage, setCroppedImage] = useState<File | undefined>(undefined);
 
+  const [modalStatus, setStatus] = useState<Boolean>(false);
   async function submitForm(formdata: any) {
     try {
       setLoading(true);
       let response = await instructorAPI.addCourse(formdata);
       if (response.data.status) {
         setLoading(false);
-       setLoad(!load)
-        closeRef && closeRef.current && closeRef.current.click()
+        setLoad(!load);
+        closeRef && closeRef.current && closeRef.current.click();
         toast.success(response.data.message);
-  
       }
     } catch (error) {
       console.log(error);
-      
+    }
+  }
+
+  
+  const clickRef = useRef<HTMLDivElement>();
+  if (modalStatus) {
+    if (clickRef.current) {
+      clickRef.current.click();
     }
   }
   useEffect(() => {
     async function fetchCategory() {
       try {
         let response = await instructorAPI.getCategory();
-        console.log(response,"ress");
-        
         setCategory(response.category);
       } catch (error) {
         console.log(error);
       }
     }
-console.log(category);
-
+    console.log(category);
     fetchCategory();
   }, []);
 
@@ -60,7 +72,7 @@ console.log(category);
     handleChange,
     handleSubmit,
     setFieldValue,
-    resetForm
+    resetForm,
   } = useFormik({
     initialValues: {
       name: "",
@@ -72,17 +84,23 @@ console.log(category);
     validationSchema: courseValidationSchema,
     onSubmit: submitForm,
   });
-  console.log(values);
-  
-  const [value, setValue] = React.useState<ExtFile | undefined>(undefined);
 
-  const updateFiles = (incommingFiles: ExtFile[]) => {
-    setValue(incommingFiles[0]);
-    setFieldValue("image", incommingFiles[0]);
+  //image selection
+
+  const selectImage = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      setValue(e?.target.files[0]);
+      console.log(e.target.files[0],"okiee");
+      
+      setStatus(true)
+    }
   };
-  const removeFile = () => {
-    setValue(undefined);
-  };
+ const selectRef = useRef<HTMLInputElement>(null);
+ const clickImage = () => {
+  if (selectRef.current) {
+      selectRef.current.click()
+  }
+ }
   return (
     <div
       id="crud-modal"
@@ -92,14 +110,14 @@ console.log(category);
     >
       <div className="relative p-4 w-full max-w-md max-h-full">
         {/* Modal content */}
-        <div className="relative  bg-base-100 rounded-lg shadow dark:bg-white-700">
+        <div className="relative bg-base-100 rounded-lg shadow dark:bg-white-700">
           {/* Modal header */}
           <div className="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-white-600">
-            <h3 className="text-lg font-semibold  text-white dark:text-white">
+            <h3 className="text-lg font-semibold text-white dark:text-white">
               Create New Course
             </h3>
-            <button 
-            onClick={()=>reset()}
+            <button
+              onClick={() => reset()}
               type="button"
               className="text-white bg-transparent hover:bg-white hover:text-white-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center hover:text-black"
               data-modal-toggle="crud-modal"
@@ -179,7 +197,7 @@ console.log(category);
                   htmlFor="category"
                   className="block mb-2 text-sm font-bold text-white dark:text-white"
                 >
-                  Category
+                  Category +{" "}
                 </label>
                 <select
                   onBlur={handleBlur}
@@ -224,25 +242,44 @@ console.log(category);
                 )}
               </div>
             </div>
-            <div className="flex items-center my-8   ">
-              {value ? (
-                <FileCard
-                  className="shadow-lg bg-white"
-                  {...value}
-                  onDelete={removeFile}
-                  preview
+            {/* {value && (
+              <div>
+                <Cropper
+                  src={URL.createObjectURL(value.file as Blob)}
+                  style={{ height: 400, width: "100%" }}
+                  initialAspectRatio={16 / 9}
+                  guides={false}
+                  ref={cropperRef}
                 />
-              ) : (
-                <FileInputButton
-                  style={{ background: "transparent", border: "1px" }}
-                  value={value ? [value] : []}
-                  onChange={updateFiles}
-                  id="image"
-                  name="image"
-                  onBlur={handleBlur}
-                />
-              )}
-              {/* <FileCard {...sampleFileProps} info/> */}
+                <button
+                  type="button"
+                  onClick={onCrop}
+                  className="text-white bg-blue-600 hover:bg-blue-700 rounded-lg text-sm px-5 py-2.5 mt-4"
+                >
+                  Crop Image
+                </button>
+              </div>
+            )} */}
+            <div className="flex items-center my-8">
+              <div className="col-span-2">
+                <figure className="max-w-lg">
+                  <label
+                    htmlFor="image"
+                    className="block mb-2 text-sm font-bold text-white dark:text-white"
+                  >
+                    Image
+                  </label>
+
+                  <img
+                    width={150}
+                    onClick={clickImage}
+                    src={`${croppedImage ? URL.createObjectURL(croppedImage) : "https://img.freepik.com/free-vector/illustration-gallery-icon_53876-27002.jpg?t=st=1719424317~exp=1719424917~hmac=0edf3d7ae44236fa46bd38cbdd34e1ada2b7fbe35bd4ba0d89c2947bc658be57"}`}
+                    className="h-auto max-w-full rounded-lg"
+                    alt="image description"
+                  />
+                </figure>
+                <input id="image" name="image"  onBlur={handleBlur} onChange={selectImage} ref={selectRef} type="file" hidden />
+              </div>
               {errors.image && touched.image ? (
                 <p className="text-orange-400 ml-3">{errors.image}</p>
               ) : (
@@ -251,7 +288,9 @@ console.log(category);
             </div>
             <button
               type="submit"
-              className={`text-white inline-flex ${loading ? 'btn-disabled' : ''} items-center focus:ring-1 focus:outline-none focus:ring-blue-400 font-bold rounded-lg text-sm px-5 py-2.5 text-center border `}
+              className={`text-white inline-flex ${
+                loading ? "btn-disabled" : ""
+              } items-center focus:ring-1 focus:outline-none focus:ring-blue-400 font-bold rounded-lg text-sm px-5 py-2.5 text-center border `}
             >
               {loading ? (
                 <PulseLoader size={10} loading color="#ffffff" />
@@ -276,6 +315,14 @@ console.log(category);
           </form>
         </div>
       </div>
+      <CropperModal
+        setValue={setValue}
+        setCroppedImage={setCroppedImage}
+        modalStatus={modalStatus}
+        setStatus={setStatus}
+        value={value}
+        setFieldValue={setFieldValue}
+      />
     </div>
   );
 }

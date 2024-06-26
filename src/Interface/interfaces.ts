@@ -8,6 +8,7 @@ export interface Student {
   about?: string;
   googleId?: string;
   profileImage?: string;
+  googleAuth?:boolean
 }
 type CategoryType =  { name: string; _id: string };
 
@@ -20,10 +21,11 @@ export interface Course {
   instructor?: Instructor;
   approved?: Boolean;
   listed?: Boolean;
-  image?: string;
+  image?: string | undefined ;
   adminVerified?: boolean;
   publish?: boolean;
   questions?: string[];
+  createdAt? : Date 
 }
 
 export interface chapter {
@@ -54,6 +56,7 @@ export interface Instructor {
   imageUrl?: string;
   about?: string;
   googleId?: string;
+  googleAuth?:boolean
 }
 
 export interface category {
@@ -119,4 +122,12 @@ export interface InstructorChat {
   studentDetails:Student,
   updatedAt : Date
   latestMessage : string
+}
+
+export interface ExtFile {
+  file: File;
+  name: string;
+  size: number;
+  type: string;
+  lastModified : number
 }

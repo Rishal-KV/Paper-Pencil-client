@@ -7,9 +7,8 @@ axiosInstance.interceptors.request.use(
   (config) => {
     // Check if the request is made to the instructorAPI
 
-    if (config && config.url &&   config?.url.startsWith("/instructor")) {
+    if (config && config.url && config?.url.startsWith("/instructor")) {
       const instructorToken = localStorage.getItem("instructorToken");
-     
 
       if (instructorToken) {
         config.headers["Authorization"] = `${instructorToken}`;
@@ -100,9 +99,11 @@ const instructorAPI = {
       throw error;
     }
   },
-  getCourse: async (page?:number) => {
+  getCourse: async (page?: number) => {
     try {
-      let response = await axiosInstance.get(`/instructor/course_list?page=${page}`);
+      let response = await axiosInstance.get(
+        `/instructor/course_list?page=${page}`
+      );
       return response;
     } catch (error) {
       throw error;
@@ -111,7 +112,6 @@ const instructorAPI = {
   addCourse: async (form: any) => {
     try {
       let { name, price, description, category, image } = form;
-      
 
       let formData = new FormData();
 
@@ -119,9 +119,7 @@ const instructorAPI = {
       formData.append("description", description);
       formData.append("price", price);
       formData.append("category", category);
-      formData.append("image", image.file);
-
-      
+      formData.append("image", image);
 
       let response = await axiosInstance.post(
         "/instructor/add_course",
@@ -219,11 +217,8 @@ const instructorAPI = {
   },
   updateChapter: async (data: any) => {
     try {
-      console.log("called...");
-      
       let response = await axiosInstance.patch("/instructor/chapter", data);
-      console.log(response,"ressssssssssssssssss");
-      
+
       return response;
     } catch (error) {
       throw error;
@@ -236,8 +231,6 @@ const instructorAPI = {
       let response = await axiosInstance.delete(
         `/instructor/lesson?chapterId=${chapterId}&lessonId=${lessonId}`
       );
-      return response;
-
       return response;
     } catch (error) {
       throw error;
@@ -270,25 +263,25 @@ const instructorAPI = {
   updateImage: async (image: any) => {
     try {
       const formData = new FormData();
-  
+
       formData.append("image", image);
-  
+
       const response = await axiosInstance.patch(
         "/instructor/profile",
         formData,
         {
           headers: {
-            "Content-Type": "multipart/form-data"
-          }
+            "Content-Type": "multipart/form-data",
+          },
         }
       );
-  
+
       return response;
     } catch (error) {
       throw error;
     }
   },
-  
+
   resendOtp: async () => {
     try {
       const instructorToken = localStorage.getItem("instructorOtpToken");
@@ -297,7 +290,9 @@ const instructorAPI = {
         Authorization: `${instructorToken}`,
         "Content-Type": "application/json", // Assuming JSON is the content type
       };
-      const response = await axiosInstance.post("/instructor/resend_otp",{headers});
+      const response = await axiosInstance.post("/instructor/resend_otp", {
+        headers,
+      });
       return response;
     } catch (error) {
       throw error;
@@ -316,12 +311,33 @@ const instructorAPI = {
     courseId: string | undefined,
     courseData: Course | undefined
   ) => {
-    try {
-      const response = await axiosInstance.patch("/instructor/update_course", {
-        courseData,
-        courseId,
-      });
+    console.log(courseData, "courseDataata");
+
+    if (typeof courseData?.image != "string" && courseData?.image) {
+      console.log("not string");
+
+      const formData = new FormData();
+
+      formData.append("name", courseData?.name as string);
+      formData.append("price", courseData?.price as unknown as string);
+      formData.append("description", courseData?.description as string);
+      formData.append("category", courseData?.category as string);
+      formData.append("image", courseData?.image as Blob);
+      formData.append("courseId", courseId as string);
+      const response = await axiosInstance.patch(
+        "/instructor/update_course",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+
       return response;
+    }
+
+    try {
     } catch (error) {
       throw error;
     }
@@ -428,13 +444,15 @@ const instructorAPI = {
     }
   },
 
-  fetchStudents: async(instructorId:string) => {
-       try {
-        const response = await axiosInstance.get(`/instructor/students?instructorId=${instructorId}`);
-        return response.data
-       } catch (error) {
-        throw error
-       }
+  fetchStudents: async (instructorId: string) => {
+    try {
+      const response = await axiosInstance.get(
+        `/instructor/students?instructorId=${instructorId}`
+      );
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
   },
   changePassword: async (
     email: string,

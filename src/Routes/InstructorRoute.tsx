@@ -98,7 +98,7 @@ function InstructorRoute() {
       />
       <Route path="/enrollments/:id" element={<IsLoggedIn><EnrollmentPage /></IsLoggedIn>} />
       <Route path="/chats" element={<Chat />} />
-      <Route path="/video" element={<Video />} />
+      <Route path="/video/:roomId" element={<IsLoggedIn><Video /></IsLoggedIn>} />
       <Route path="/questions" element={<QuestionPage />} />
       <Route path="/questionmanagement/:courseId" element={<IsLoggedIn><QuestionManagement /></IsLoggedIn>} />
       <Route path="/changepassword" element={<IsLoggedIn><ChangePasswordPage/></IsLoggedIn>}/>

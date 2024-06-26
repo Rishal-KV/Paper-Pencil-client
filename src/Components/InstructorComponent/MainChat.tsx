@@ -3,7 +3,7 @@ import { socket } from "../../Config/socket";
 import { useSelector } from "react-redux";
 import instructorAPI from "../../API/instructor";
 import { Student } from "../../Interface/interfaces";
-import { useNavigate } from "react-router-dom";
+
 import InputEmoji from "react-input-emoji";
 import { useRef } from "react";
 import { MdVideoCall } from "react-icons/md";
@@ -21,7 +21,7 @@ function MainChat({
   const [text, setText] = useState("");
   const instructor = useSelector((state: any) => state.instructor);
   const sender = instructor.instructor._id;
-  const navigate = useNavigate();
+  
   function randomID(len: number) {
     let result = "";
     if (result) return result;
@@ -36,9 +36,9 @@ function MainChat({
   }
   const navigateTo = () => {
     
-    const text = `https://paper-pencil.vercel.app/instructor/video?roomID=${roomId}`
+    const text = `https://paper-pencil.vercel.app/instructor/video/${roomId}`
     socket.emit("sendMessage", {text, sender, receiver });
-    navigate(`/instructor/video?roomID=${roomId}`)
+    window.open(`/instructor/video/${roomId}`, '_blank');
   }
   useEffect(() => {
     socket.on("newMessage", ({ newMessage }) => {
