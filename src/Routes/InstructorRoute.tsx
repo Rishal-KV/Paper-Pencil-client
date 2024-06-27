@@ -11,7 +11,7 @@ import EditProfilePage from "../Pages/Instructors/EditProfilePage";
 import EnrollmentPage from "../Pages/Instructors/EnrollmentPage";
 import Chat from "../Pages/Instructors/Chat";
 import { initSocket, socket } from "../Config/socket";
-import Video from "../Pages/Instructors/VideoPage";
+
 import QuestionPage from "../Pages/Instructors/QuestionList";
 import QuestionManagement from "../Pages/Instructors/QuestionManagement";
 import NotFound from "../Pages/Instructors/NotFound";
@@ -98,7 +98,7 @@ function InstructorRoute() {
       />
       <Route path="/enrollments/:id" element={<IsLoggedIn><EnrollmentPage /></IsLoggedIn>} />
       <Route path="/chats" element={<Chat />} />
-      <Route path="/video/:roomId" element={<IsLoggedIn><Video /></IsLoggedIn>} />
+      {/* <Route path="/video/:roomId" element={<IsLoggedIn><Video /></IsLoggedIn>} /> */}
       <Route path="/questions" element={<QuestionPage />} />
       <Route path="/questionmanagement/:courseId" element={<IsLoggedIn><QuestionManagement /></IsLoggedIn>} />
       {/* <Route path="/changepassword" element={<IsLoggedIn><ChangePasswordPage/></IsLoggedIn>}/> */}

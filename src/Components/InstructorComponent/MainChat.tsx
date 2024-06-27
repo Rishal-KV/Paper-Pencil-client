@@ -45,10 +45,10 @@ function MainChat({
       });
       const { token } = response.data;
 
-      const text = `https://paper-pencil.vercel.app/instructor/video/${roomId}?token=${token}`;
+      const text = `https://paper-pencil.vercel.app/video/${roomId}?token=${token}`;
       socket.emit("sendMessage", { text, sender, receiver });
 
-      window.open(`/instructor/video/${roomId}?token=${token}`, "_blank");
+      window.open(`/video/${roomId}?token=${token}`, "_blank");
     } catch (error) {
       console.error("Error generating token:", error);
     }
