@@ -38,7 +38,7 @@ function MainChat({
 
   const navigateTo = async () => {
     try {
-      const response = await axios.post("http://localhost:4000/instructor/generate_token", {
+      const response = await axios.post("https://nutrix.fun/instructor/generate_token", {
         roomId,
         senderId:sender,
         recipientId: receiver,
