@@ -18,11 +18,10 @@ function Login() {
 
       try {
         const googleResponse = await instructorAPI.googleAuth(userInfo.data);
-        
 
         if (googleResponse.data.status) {
-          console.log(googleResponse);
-
+          console.log(googleResponse,"resss");
+          
           dispatch(
             instructorLogin({
               instructor: googleResponse.data.instructor,
@@ -65,10 +64,8 @@ function Login() {
         navigate("/instructor");
       }
     } catch (error: any) {
-      console.log(error);
-      
-      console.log("errr");
-      
+  
+
       if (!error.response.data.status) {
         toast.error(error.response.data.message);
       }
@@ -167,7 +164,6 @@ function Login() {
               Login
             </button>
             <div
-
               onClick={() => {
                 googleLogin();
               }}

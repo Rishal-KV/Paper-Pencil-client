@@ -159,23 +159,25 @@ function ProfileDetail() {
                   Links
                 </span>
                 <ul>
+                  
                   {instructor.instructor.googleAuth ? (
                     ""
                   ) : (
+                  
                     <li
-                      onClick={() => navigateTo("profile")}
-                      className="mb-2 font-Poppins underline text-gray-500"
-                    >
-                      Profile
-                    </li>
-                  )}
-
-                  <li
                     onClick={() => navigateTo("change_password")}
                     className="mb-2 font-Poppins underline text-gray-500"
                   >
                     Change Password
                   </li>
+                  )}
+
+                  <li
+                      onClick={() => navigateTo("profile")}
+                      className="mb-2 font-Poppins underline text-gray-500"
+                    >
+                      Profile
+                    </li>
                 </ul>
               </div>
             </div>
