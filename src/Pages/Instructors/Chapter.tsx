@@ -1,7 +1,8 @@
 import AddChapter from '../../Components/InstructorComponent/AddChapter';
 import Course from '../../Components/InstructorComponent/CourseCrud'
+import Footer from '../../Components/InstructorComponent/Footer';
 import Navbar from '../../Components/InstructorComponent/NavBar';
-import Footer from '../../Components/StudentComponent/Footer';
+
 
 
 function Chapter() {

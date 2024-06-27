@@ -88,64 +88,73 @@ const Card: React.FC<CardProps> = ({
 
   return (
     <div className="flex justify-center">
-      <div className="w-68 h-72 shadow-md p-5 rounded-md mb-5 mr-5">
-        <div className="w-48" onClick={handleClick}>
-          <img className="rounded-2xl" src={course?.image} alt="course image" />
-        </div>
-        <div className="mt-2">
-          <h1 className="font-extrabold text-lg text-black">{course?.name}</h1>
-          {!mycourse && (
-            <p className="font-semibold text-md text-black">
-              Price : ₹{course?.price}
-            </p>
-          )}
-          <p className="font-semibold text-black">
-            Created by: {course?.instructor?.name}
-          </p>
-        </div>
-        {learning && (
-          <div className="w-full bg-gray-200 rounded-full mt-2">
-            <div
-              className="bg-customBlue text-xs  font-medium text-blue-100 text-center p-0.5 leading-none rounded-full"
-              style={{ width: `${calculateProgress()}%` }}
-            >
-              {Math.floor(calculateProgress())}%
-            </div>
-          </div>
-        )}
-        <div className="flex items-center justify-between   mt-2">
-          {learning && progress?.courseStatus ? (
-            <button
-              onClick={() =>
-                studentAPi.generateCertificate(student.student._id, course._id)
-              }
-              type="button"
-              className="flex items-center text-white mt-4  bg-customBlue font-semibold rounded-md text-sm px-5 py-2.5 me-2 mb-2"
-            >
-              <span className="mr-2">Certificate</span>
-              <IoMdDownload />
-            </button>
-          ) : (
-            <button
-              onClick={handleClick}
-              type="button"
-              className="text-white mt-4 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-semibold rounded-md text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
-            >
-              {mycourse ? "Start Learning" : "Enroll Now"}
-            </button>
-          )}
-          {!learning && (
-            <FontAwesomeIcon
-              onClick={() => student.student ?  addToFavourite(course._id, student.student._id) : navigate('/login')}
-              className={`text-2xl text-blue-600 hover:cursor-pointer ${
-               student && isCourseInFavourites(course._id) ? "" : "text-regular"
-              }`}
-              icon={student && isCourseInFavourites(course._id) ? faBookmark : farBookmark}
-            />
-          )}
+  <div className="w-full md:w-3/4 lg:w-68 shadow-md p-5 rounded-md mb-5 mr-5">
+    <div className="w-48 md:w-full" onClick={handleClick}>
+      <img className="w-full h-full object-cover rounded-2xl" src={course?.image} alt="course image" />
+    </div>
+
+    <div className="mt-2">
+      <h1 className="font-extrabold text-lg text-black">{course?.name}</h1>
+      {!mycourse && (
+        <p className="font-semibold text-md text-black">
+          Price: ₹{course?.price}
+        </p>
+      )}
+      <p className="font-semibold text-black">
+        Created by: {course?.instructor?.name}
+      </p>
+    </div>
+
+    {learning && (
+      <div className="w-full bg-gray-200 rounded-full mt-2">
+        <div
+          className="bg-customBlue text-xs font-medium text-blue-100 text-center p-0.5 leading-none rounded-full"
+          style={{ width: `${calculateProgress()}%` }}
+        >
+          {Math.floor(calculateProgress())}%
         </div>
       </div>
+    )}
+
+    <div className="flex items-center justify-between mt-2">
+      {learning && progress?.courseStatus ? (
+        <button
+          onClick={() =>
+            studentAPi.generateCertificate(student.student._id, course._id)
+          }
+          type="button"
+          className="flex items-center text-white mt-4 bg-customBlue font-semibold rounded-md text-sm px-5 py-2.5 me-2 mb-2"
+        >
+          <span className="mr-2">Certificate</span>
+          <IoMdDownload />
+        </button>
+      ) : (
+        <button
+          onClick={handleClick}
+          type="button"
+          className="text-white mt-4 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-semibold rounded-md text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
+        >
+          {mycourse ? "Start Learning" : "Enroll Now"}
+        </button>
+      )}
+
+      {!learning && (
+        <FontAwesomeIcon
+          onClick={() =>
+            student.student
+              ? addToFavourite(course._id, student.student._id)
+              : navigate("/login")
+          }
+          className={`text-2xl text-blue-600 hover:cursor-pointer ${
+            student && isCourseInFavourites(course._id) ? "" : "text-regular"
+          }`}
+          icon={student && isCourseInFavourites(course._id) ? faBookmark : farBookmark}
+        />
+      )}
     </div>
+  </div>
+</div>
+
   );
 };
 

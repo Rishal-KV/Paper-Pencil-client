@@ -28,9 +28,10 @@ const ChangePassword: React.FC = () => {
             formik.resetForm();
             toast.success(res.message);
           } else {
+            formik.resetForm();
+            toast.error(res.message);
           }
-          formik.resetForm();
-          toast.error(res.message);
+        
         });
     },
   });

@@ -158,22 +158,24 @@ function Courses({
             <Search setSearch={setSearch} />
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-16 py-10">
-            {courses.length > 0 ? (
-              courses.map((course: Course) => (
-                <div key={course._id} className="flex justify-start">
-                  <Card key={course._id} 
-                    favourites={false}
-                    learning={false}
-                    mycourse={false}
-                    course={course}
-                  />
-                </div>
-              ))
-            ) : (
-              <div>No courses found.</div>
-            )}
-          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 lg:gap-10 py-10">
+  {courses.length > 0 ? (
+    courses.map((course: Course) => (
+      <div key={course._id} className="flex justify-center">
+        <Card
+          key={course._id}
+          favourites={false}
+          learning={false}
+          mycourse={false}
+          course={course}
+        />
+      </div>
+    ))
+  ) : (
+    <div className="text-center">No courses found.</div>
+  )}
+</div>
+
           {
             courses.length > 0 &&  
             <div className="flex items-center justify-center">

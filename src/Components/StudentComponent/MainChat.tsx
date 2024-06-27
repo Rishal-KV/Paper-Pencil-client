@@ -28,6 +28,8 @@ function MainChat({
 
   useEffect(() => {
     socket.on("newMessage", ({ newMessage }) => {
+     
+      
       setConverstaion((prevMessages) => {
         const messageIds = prevMessages.map((message) => message._id);
         if (!messageIds.includes(newMessage._id)) {
@@ -37,6 +39,8 @@ function MainChat({
       });
     });
   }, []);
+  console.log(conversation,"conevr");
+  
   // useEffect(() => {
   //   socket.on("newMessage", ({ newMessage }) => {
   //     setConverstaion((prevConversation) => [...prevConversation, newMessage]);
