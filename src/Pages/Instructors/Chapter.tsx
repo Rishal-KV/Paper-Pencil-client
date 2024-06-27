@@ -1,6 +1,7 @@
 import AddChapter from '../../Components/InstructorComponent/AddChapter';
 import Course from '../../Components/InstructorComponent/CourseCrud'
 import Navbar from '../../Components/InstructorComponent/NavBar';
+import Footer from '../../Components/StudentComponent/Footer';
 
 
 function Chapter() {
@@ -11,7 +12,7 @@ function Chapter() {
       <Navbar/>
       <Course/>
       <AddChapter/>
-     
+      <Footer/>
     </div>
   )
 }

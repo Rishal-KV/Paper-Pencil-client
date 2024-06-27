@@ -139,7 +139,7 @@ function CoursePlay() {
     return (enrolled?.completedChapters as string[])?.includes(chapterId);
   };
 
-  console.log(selectedLesson, "selected");
+  
 
   useEffect(() => {
     const fetchCourse = async () => {

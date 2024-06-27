@@ -3,7 +3,7 @@ import { socket } from "../../Config/socket";
 import { useSelector } from "react-redux";
 import instructorAPI from "../../API/instructor";
 import { Student } from "../../Interface/interfaces";
-
+import axios from "axios";
 import InputEmoji from "react-input-emoji";
 import { useRef } from "react";
 import { MdVideoCall } from "react-icons/md";
@@ -21,11 +21,12 @@ function MainChat({
   const [text, setText] = useState("");
   const instructor = useSelector((state: any) => state.instructor);
   const sender = instructor.instructor._id;
-  
+
   function randomID(len: number) {
     let result = "";
     if (result) return result;
-    var chars = "12345qwertyuiopasdfgh67890jklmnbvcxzMNBVCZXASDQWERTYHGFUIOLKJP",
+    var chars =
+        "12345qwertyuiopasdfgh67890jklmnbvcxzMNBVCZXASDQWERTYHGFUIOLKJP",
       maxPos = chars.length,
       i;
     len = len || 5;
@@ -34,12 +35,25 @@ function MainChat({
     }
     return result;
   }
-  const navigateTo = () => {
-    
-    const text = `https://paper-pencil.vercel.app/instructor/video/${roomId}`
-    socket.emit("sendMessage", {text, sender, receiver });
-    window.open(`/instructor/video/${roomId}`, '_blank');
-  }
+
+  const navigateTo = async () => {
+    try {
+      const response = await axios.post("http://localhost:4000/instructor/generate_token", {
+        roomId,
+        senderId:sender,
+        recipientId: receiver,
+      });
+      const { token } = response.data;
+
+      const text = `http://localhost:5173/instructor/video/${roomId}?token=${token}`;
+      socket.emit("sendMessage", { text, sender, receiver });
+
+      window.open(`/instructor/video/${roomId}?token=${token}`, "_blank");
+    } catch (error) {
+      console.error("Error generating token:", error);
+    }
+  };
+
   useEffect(() => {
     socket.on("newMessage", ({ newMessage }) => {
       setConversations((prevMessages) => {
@@ -51,7 +65,7 @@ function MainChat({
       });
     });
   }, []);
-  const roomId = randomID(5)
+  const roomId = randomID(5);
   const sendMess = (e: SyntheticEvent) => {
     e.preventDefault();
     socket.emit("sendMessage", { text, sender, receiver });
@@ -66,14 +80,12 @@ function MainChat({
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
- useEffect(()=>{
-
-  
-scrollToBottom()
- },[conversations])
+  useEffect(() => {
+    scrollToBottom();
+  }, [conversations]);
   return (
     <div className="flex flex-col h-screen bg-white">
       {receiver && (
@@ -88,7 +100,7 @@ scrollToBottom()
       <div ref={messagesEndRef} className="flex-1 overflow-y-auto p-4 pb-44">
         {!receiver ? (
           <div className="flex justify-center items-center h-96 font-bold ">
-            <div  className="text-black">
+            <div className="text-black">
               <h1>👈 select someone to start a conversation</h1>
             </div>
           </div>
@@ -113,10 +125,13 @@ scrollToBottom()
               </div>
               <div ref={messagesEndRef} className="flex flex-col max-w-96">
                 <div className="bg-base-100 rounded-lg p-3 mb-1">
-                  {
-                    chat.text.slice(0,4) == 'https' ? <a className="text-white" href={chat.text}>{chat.text}</a> :  <p className="text-white">{chat.text}</p>
-                  }
-                 
+                  {chat.text.slice(0, 4) == "https" ? (
+                    <a className="text-white" href={chat.text}>
+                      {chat.text}
+                    </a>
+                  ) : (
+                    <p className="text-white">{chat.text.substring(0,60)}</p>
+                  )}
                 </div>
                 <div className="text-xs text-gray-500">
                   {new Date(chat.createdAt).toLocaleTimeString()}
@@ -125,11 +140,10 @@ scrollToBottom()
             </div>
           ))
         )}
-   
       </div>
       {receiver && (
         <footer className="border-t border-gray-300 py-2 px-4   w-full ">
-        {/* <div className="flex  justify-center">
+          {/* <div className="flex  justify-center">
             <button
               onClick={navigateTo}
               type="button"
@@ -162,16 +176,14 @@ scrollToBottom()
               shouldReturn={false}
               shouldConvertEmojiToImage={false}
             />
-            {
-              text && 
+            {text && (
               <button
-              type="submit"
-              className="bg-base-100 text-white px-4 py-2 rounded-md ml-2"
-            >
-              Send
-            </button>
-            }
-           
+                type="submit"
+                className="bg-base-100 text-white px-4 py-2 rounded-md ml-2"
+              >
+                Send
+              </button>
+            )}
           </form>
         </footer>
       )}

@@ -167,10 +167,11 @@ function Login() {
               Login
             </button>
             <div
+
               onClick={() => {
                 googleLogin();
               }}
-              className="flex items-center border-2  justify-center mt-3 w-full h-10 text-black font-bold rounded-lg text-sm  me-2 mb-2 focus:outline-none "
+              className="flex items-center border-2  justify-center mt-3 w-full h-10 text-black font-bold rounded-lg text-sm  me-2 mb-2 focus:outline-none hover:cursor-pointer "
             >
               <img
                 className="w-6"

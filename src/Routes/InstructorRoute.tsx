@@ -101,7 +101,7 @@ function InstructorRoute() {
       <Route path="/video/:roomId" element={<IsLoggedIn><Video /></IsLoggedIn>} />
       <Route path="/questions" element={<QuestionPage />} />
       <Route path="/questionmanagement/:courseId" element={<IsLoggedIn><QuestionManagement /></IsLoggedIn>} />
-      <Route path="/changepassword" element={<IsLoggedIn><ChangePasswordPage/></IsLoggedIn>}/>
+      {/* <Route path="/changepassword" element={<IsLoggedIn><ChangePasswordPage/></IsLoggedIn>}/> */}
       <Route path="*" element={<NotFound/>}/>
     </Routes>
   );

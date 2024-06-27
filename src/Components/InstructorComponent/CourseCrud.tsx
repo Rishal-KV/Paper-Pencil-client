@@ -408,6 +408,7 @@ function AddChapters() {
                     </label>
 
                     <img
+                    width={150}
                       onClick={selectImage}
                       className="h-auto max-w-full rounded-lg"
                       src={

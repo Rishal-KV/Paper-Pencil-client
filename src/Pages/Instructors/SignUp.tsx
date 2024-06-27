@@ -37,102 +37,7 @@ function Signup() {
       onSubmit: submit,
     });
 
-  // return (
-  //   <div className="min-h-screen py-40">
-  //     {token ? (
-  //       <Otp who="student" forgot={false} />
-  //     ) : (
-  //       <div className="container mx-auto">
-  //         <div className="flex flex-col lg:flex-row w-10/12 lg:w-8/12 bg-white rounded-xl mx-auto shadow-lg overflow-hidden">
-  //           <div
-  //             className="w-full lg:w-1/2 flex flex-col items-center justify-center p-12 bg-no-repeat bg-cover bg-center"
-  //             style={{
-  //               backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://images.unsplash.com/photo-1501504905252-473c47e087f8?q=80&w=1374&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')`,
-  //             }}
-  //           >
-  //             <img
-  //               src="../images/Screenshot from 2024-03-02 19-49-21.png"
-  //               alt=""
-  //             />
-  //           </div>
-  //           <div className="w-full lg:w-1/2 py-16 px-12">
-  //             <h2 className="text-3xl mb-4">Register</h2>
-  //             <p className="mb-4">
-  //               Create your account. It’s free and only take a minute
-  //             </p>
-  //             <form onSubmit={handleSubmit}>
-  //               <div className="mt-5">
-  //                 <input
-  //                   type="text"
-  //                   placeholder="name"
-  //                   className="border border-gray-400 py-1 px-2 w-full"
-  //                   name="name"
-  //                   value={values.name}
-  //                   onChange={handleChange}
-  //                   onBlur={handleBlur}
-  //                 />
-  //                 {errors.name && touched.name && (
-  //                   <p className="text-red-500">{errors.name}</p>
-  //                 )}
-  //               </div>
-  //               <div className="mt-5">
-  //                 <input
-  //                   type="text"
-  //                   placeholder="Email"
-  //                   className="border border-gray-400 py-1 px-2 w-full"
-  //                   name="email"
-  //                   value={values.email}
-  //                   onChange={handleChange}
-  //                   onBlur={handleBlur}
-  //                 />
-  //                 {errors.email && touched.email && (
-  //                   <p className="text-red-500">{errors.email}</p>
-  //                 )}
-  //               </div>
-  //               <div className="mt-5">
-  //                 <input
-  //                   type="password"
-  //                   placeholder="Password"
-  //                   className="border border-gray-400 py-1 px-2 w-full"
-  //                   name="password"
-  //                   value={values.password}
-  //                   onChange={handleChange}
-  //                   onBlur={handleBlur}
-  //                 />
-  //                 {errors.password && touched.password && (
-  //                   <p className="text-red-500">{errors.password}</p>
-  //                 )}
-  //               </div>
-  //               <div className="mt-5">
-  //                 <input
-  //                   type="password"
-  //                   placeholder="Confirm Password"
-  //                   className="border border-gray-400 py-1 px-2 w-full"
-  //                   name="confirmPassword"
-  //                   value={values.confirmPassword}
-  //                   onChange={handleChange}
-  //                   onBlur={handleBlur}
-  //                 />
-  //                 {errors.confirmPassword && touched.confirmPassword && (
-  //                   <p className="text-red-500">{errors.confirmPassword}</p>
-  //                 )}
-  //               </div>
 
-  //               <div className="mt-5">
-  //                 <button
-  //                   type="submit"
-  //                   className="w-full bg-blue-500 py-3 text-center text-white"
-  //                 >
-  //                   Register Now
-  //                 </button>
-  //               </div>
-  //             </form>
-  //           </div>
-  //         </div>
-  //       </div>
-  //     )}
-  //   </div>
-  // );
 
   return (
     <>
@@ -249,6 +154,7 @@ function Signup() {
       ) : (
         <Otp forgot={false} who="instructor" />
       )}
+      
     </>
   );
 }

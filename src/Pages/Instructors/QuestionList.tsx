@@ -1,4 +1,5 @@
 
+import Footer from '../../Components/InstructorComponent/Footer'
 import Navbar from '../../Components/InstructorComponent/NavBar'
 
 import QuestionList from '../../Components/InstructorComponent/QuestionList'
@@ -9,6 +10,7 @@ function QuestionPage() {
         <Navbar/>
       
       <QuestionList/>
+      <Footer/>
     </div>
   )
 }

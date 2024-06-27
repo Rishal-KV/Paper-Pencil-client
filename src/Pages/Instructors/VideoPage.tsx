@@ -1,35 +1,60 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { JitsiMeeting } from "@jitsi/react-sdk";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate, useLocation } from "react-router-dom";
+import { jwtDecode } from "jwt-decode";
 import { useSelector } from "react-redux";
-import { InstructorType } from "../../Interface/interfaces";
+import { InstructorType, studentType } from "../../Interface/interfaces";
+interface JwtPayload {
+  roomId: string;
+  recipientId: string;
+  senderId: string;
+}
 
 function VideoPage() {
   const { roomId } = useParams();
-  const instructor = useSelector((state: InstructorType) => state.instructor.instructor);
-
+  const navigate = useNavigate(); // Updated to use useNavigate
+  const location = useLocation();
+  const instructor = useSelector(
+    (state: InstructorType) => state.instructor.instructor
+  );
+  const [isValidToken, setIsValidToken] = useState(false);
+  const studentId = useSelector(
+    (state: studentType) => state?.student?.student?._id
+  );
   useEffect(() => {
-    if (!roomId) {
-      console.error("Room ID is not defined!");
+    const queryParams = new URLSearchParams(location.search);
+    const token = queryParams.get("token");
+
+    if (!token) {
+      navigate("/unauthorized"); // Updated to use navigate
+      return;
     }
 
-    if (!instructor) {
-      console.error("Instructor information is not available!");
+    try {
+      const decoded = jwtDecode<JwtPayload>(token);
+      if (
+        (decoded.roomId === roomId && decoded.recipientId === studentId) ||
+        decoded.senderId === instructor._id
+      ) {
+        console.log(decoded.senderId, "=====", instructor._id);
+
+        setIsValidToken(true);
+      } else {
+        navigate("/unauthorized"); // Updated to use navigate
+      }
+    } catch (error) {
+      console.error("Invalid token:", error);
+      navigate("/unauthorized"); // Updated to use navigate
     }
-  }, [roomId, instructor]);
+  }, [roomId, instructor, navigate, location.search]);
 
-  if (!roomId) {
-    return <div>Error: Room ID is not defined.</div>;
+  if (!isValidToken) {
+    return <div>Unauthorized access</div>;
   }
-
-  if (!instructor) {
-    return <div>Error: Instructor information is not available.</div>;
-  }
-
 
   return (
     <JitsiMeeting
-      roomName={roomId}
+      roomName={roomId as string}
       configOverwrite={{
         startWithAudioMuted: true,
         disableModeratorIndicator: true,
@@ -42,7 +67,6 @@ function VideoPage() {
       userInfo={{
         displayName: instructor.name,
         email: instructor.email as string,
-        
       }}
       getIFrameRef={(iframeRef) => {
         if (iframeRef) {

@@ -211,7 +211,7 @@ function ProfileDetails() {
                       Name:
                     </label>
                     <input
-                      value={student?.name}
+                      value={studentDetails?.student.name}
                       disabled
                       className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                       id="name"
@@ -226,7 +226,7 @@ function ProfileDetails() {
                       Phone:
                     </label>
                     <input
-                      value={student?.number}
+                      value={studentDetails.student.number}
                       disabled
                       className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                       id="number"

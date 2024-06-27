@@ -1,4 +1,5 @@
 
+import Footer from "../../Components/InstructorComponent/Footer"
 import Navbar from "../../Components/InstructorComponent/NavBar"
 import Questions from "../../Components/InstructorComponent/Questions"
 function QuestionManagement() {
@@ -7,6 +8,7 @@ function QuestionManagement() {
         <Navbar/>
       
         <Questions/>
+        <Footer/>
     </div>
   )
 }
