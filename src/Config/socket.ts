@@ -1,6 +1,6 @@
 import { io } from "socket.io-client";
 
-const SOCKET_URL = "https://paper-pencil.vercel.app";
+const SOCKET_URL = "https://nutrix.fun";
 
 export const socket = io(SOCKET_URL);
 
