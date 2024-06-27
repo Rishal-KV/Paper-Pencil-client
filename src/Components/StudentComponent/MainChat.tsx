@@ -28,8 +28,6 @@ function MainChat({
 
   useEffect(() => {
     socket.on("newMessage", ({ newMessage }) => {
-     
-      
       setConverstaion((prevMessages) => {
         const messageIds = prevMessages.map((message) => message._id);
         if (!messageIds.includes(newMessage._id)) {
@@ -39,16 +37,16 @@ function MainChat({
       });
     });
   }, []);
-  console.log(conversation,"conevr");
-  
+ 
+
   // useEffect(() => {
   //   socket.on("newMessage", ({ newMessage }) => {
   //     setConverstaion((prevConversation) => [...prevConversation, newMessage]);
   //   });
   // }, []);
-   const navigateTo = (url:string) => {
-    window.open(url, '_blank');
-   }
+  const navigateTo = (url: string) => {
+    window.open(url, "_blank");
+  };
   const sendMess = (e: SyntheticEvent) => {
     e.preventDefault();
 
@@ -98,7 +96,7 @@ function MainChat({
         className="w-8 h-8 rounded-full"
       /> */}
               </div>
-              {chats.text.includes("https://paper-pencil.vercel.app/video") ? (
+              {chats.text.includes("http://localhost:5173/video") ? (
                 <div className="flex flex-col items-center">
                   {/* <button
                     className="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-teal-300 to-lime-300 group-hover:from-teal-300 group-hover:to-lime-300 dark:text-white dark:hover:text-gray-900 focus:ring-4 focus:outline-none focus:ring-lime-200 dark:focus:ring-lime-800"
@@ -126,7 +124,7 @@ function MainChat({
                       below to join the meeting:
                     </p>
                     <p
-                      onClick={()=> navigateTo(chats.text)}
+                      onClick={() => navigateTo(chats.text)}
                       className="bg-blue-500 text-white py-2 px-4 rounded-lg inline-block mt-2 sm:mt-4 hover:bg-blue-600 w-full text-center sm:w-auto"
                     >
                       Join Meeting
@@ -136,7 +134,7 @@ function MainChat({
                       paste the following link into your browser:
                     </p>
                     <p className="text-gray-600 break-words sm:block hidden">
-                      {chats.text.substring(0,60)}
+                      {chats.text.substring(0, 60)}
                     </p>
                     <p className="text-gray-600 mt-2 sm:mt-4 sm:block hidden">
                       Thank you!

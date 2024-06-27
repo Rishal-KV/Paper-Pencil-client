@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 import { JitsiMeeting } from "@jitsi/react-sdk";
 import { useParams, useNavigate, useLocation } from "react-router-dom";
-import { jwtDecode } from "jwt-decode";
+import {jwtDecode} from "jwt-decode";
 import { useSelector } from "react-redux";
-import { InstructorType, studentType } from "../../Interface/interfaces";
+import { InstructorType } from "../../Interface/interfaces";
+
 interface JwtPayload {
   roomId: string;
   recipientId: string;
@@ -12,39 +13,49 @@ interface JwtPayload {
 
 function VideoPage() {
   const { roomId } = useParams();
-  const navigate = useNavigate(); // Updated to use useNavigate
+  const navigate = useNavigate();
   const location = useLocation();
   const instructor = useSelector(
     (state: InstructorType) => state.instructor.instructor
   );
   const [isValidToken, setIsValidToken] = useState(false);
-  const studentId = useSelector(
-    (state: studentType) => state?.student?.student?._id
-  );
+
+
   useEffect(() => {
     const queryParams = new URLSearchParams(location.search);
     const token = queryParams.get("token");
 
     if (!token) {
-      navigate("/unauthorized"); // Updated to use navigate
+      navigate("/unauthorized");
       return;
     }
 
     try {
       const decoded = jwtDecode<JwtPayload>(token);
+      const studentToken = localStorage.getItem('studentToken');
+      const instructorToken = localStorage.getItem('instructorToken');
+      
+      let auth: any;
+      if (studentToken) {
+        auth = jwtDecode<any>(studentToken);
+      } else if (instructorToken) {
+        auth = jwtDecode<any>(instructorToken);
+      } else {
+        navigate("/unauthorized");
+        return;
+      }
+
       if (
-        (decoded.roomId === roomId && decoded.recipientId === studentId) ||
+        (decoded.roomId === roomId && decoded.recipientId === auth.id) ||
         decoded.senderId === instructor._id
       ) {
-        console.log(decoded.senderId, "=====", instructor._id);
-
         setIsValidToken(true);
       } else {
-        navigate("/unauthorized"); // Updated to use navigate
+        navigate("/unauthorized");
       }
     } catch (error) {
       console.error("Invalid token:", error);
-      navigate("/unauthorized"); // Updated to use navigate
+      navigate("/unauthorized");
     }
   }, [roomId, instructor, navigate, location.search]);
 
@@ -65,8 +76,8 @@ function VideoPage() {
         DISABLE_JOIN_LEAVE_NOTIFICATIONS: true,
       }}
       userInfo={{
-        displayName: instructor.name,
-        email: instructor.email as string,
+        displayName: instructor?.name,
+        email: instructor?.email as string,
       }}
       getIFrameRef={(iframeRef) => {
         if (iframeRef) {
