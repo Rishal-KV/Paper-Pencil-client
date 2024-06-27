@@ -38,15 +38,14 @@ function MainChat({
 
   const navigateTo = async () => {
     try {
-      const response = await axios.post("http://localhost:4000/instructor/generate_token", {
+      const response = await axios.post("https://nutrix.fun/instructor/generate_token", {
         roomId,
         senderId:sender,
         recipientId: receiver,
       });
       const { token } = response.data;
-      
-       localStorage.setItem('studentId',receiver)
-      const text = `http://localhost:5173/video/${roomId}?token=${token}`;
+
+      const text = `https://paper-pencil.vercel.app/video/${roomId}?token=${token}`;
       socket.emit("sendMessage", { text, sender, receiver });
 
       window.open(`/video/${roomId}?token=${token}`, "_blank");
