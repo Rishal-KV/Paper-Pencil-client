@@ -10,15 +10,12 @@ import { StudentChat } from "../../Interface/interfaces";
 import { useNavigate } from "react-router-dom";
 import moment from "moment";
 function ChatSide({ chatId }: { chatId: string }) {
-
-
   const [userInfo, setUserInfo] = useState<Instructor>();
   const [chatList, setChatList] = useState<StudentChat[]>([]);
   const student = useSelector((state: any) => state.student);
 
   const studentId = student.student?._id;
   const [instructorOnline, setInstructorOnline] = useState([]);
-  
 
   useEffect(() => {
     socket.emit("onlineStatus", studentId);
@@ -28,8 +25,6 @@ function ChatSide({ chatId }: { chatId: string }) {
     };
 
     socket.on("onlineStatus", handleOnlineStatus);
-
-    
 
     return () => {
       socket.emit("offlineStatus", studentId);
@@ -69,28 +64,27 @@ function ChatSide({ chatId }: { chatId: string }) {
     <div className="bg-white min-h-screen flex overflow-hidden">
       <div className="w-1/4 bg-white border-r flex flex-col">
         <div className="flex justify-end px-3 p-2  ">
-        <button
-  onClick={() => navigate(-1)}
-  type="button"
-  className="flex items-center justify-center w-full px-4 py-2 text-sm text-gray-700 transition-colors duration-200 bg-blue-500 border rounded-lg gap-x-2 sm:w-auto sm:px-5 sm:py-2 "
->
-  <svg
-    className="w-5 h-5 text-white rtl:rotate-180"
-    xmlns="http://www.w3.org/2000/svg"
-    fill="none"
-    viewBox="0 0 24 24"
-    strokeWidth="1.5"
-    stroke="currentColor"
-  >
-    <path
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      d="M6.75 15.75L3 12m0 0l3.75-3.75M3 12h18"
-    />
-  </svg>
-  <span className="text-white font-Poppins">Go back</span>
-</button>
-
+          <button
+            onClick={() => navigate(-1)}
+            type="button"
+            className="flex items-center justify-center w-full px-4 py-2 text-sm text-gray-700 transition-colors duration-200 bg-blue-500 border rounded-lg gap-x-2 sm:w-auto sm:px-5 sm:py-2 "
+          >
+            <svg
+              className="w-5 h-5 text-white rtl:rotate-180"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth="1.5"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M6.75 15.75L3 12m0 0l3.75-3.75M3 12h18"
+              />
+            </svg>
+            <span className="text-white font-Poppins">Go back</span>
+          </button>
         </div>
         <div className="overflow-y-auto flex-grow p-3 mb-9 pb-20">
           {chatList.map((item: StudentChat) => (
