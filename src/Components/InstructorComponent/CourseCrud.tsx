@@ -20,7 +20,7 @@ function AddChapters() {
   const [chapters, setChapter] = useState<chapter[]>([]);
   const [chapterLoad, setChapterLoad] = useState(false);
   const [lessonLoad, setLessonLoad] = useState(false);
-  const [course, setCourse] = useState<Course>();
+  const [course, setCourse] = useState<any>();
   const [category, setCategory] = useState<category[]>();
   const [loadCourse, setLoadCourse] = useState<boolean>(false);
   const closeRef: RefObject<HTMLButtonElement> = useRef(null);
@@ -196,15 +196,17 @@ function AddChapters() {
                 {/* <h6 className="mb-4 block font-sans text-base font-semibold uppercase leading-relaxed tracking-normal text-pink-500 antialiased">
         {course?.name}
       </h6> */}
-                <h4 className="mb-2 block font-Poppins text-2xl font-semibold leading-snug tracking-normal text-blue-gray-900 antialiased">
+                <h4 className="mb-2 capitalize block font-Poppins text-2xl font-semibold leading-snug tracking-normal text-blue-gray-900 antialiased">
                   {course && course.name}
                 </h4>
-                <p className="mb-8 block font-popins text-base font-normal leading-relaxed text-gray-700 antialiased">
+                <span className="bg-red-100   text-red-800 text-sm font-medium me-2 px-2.5 py-2 rounded dark:bg-red-900 dark:text-red-300">{course?.category && course?.category?.name}</span>
+                <span className="bg-indigo-100 text-indigo-800 text-sm font-medium me-2 px-2.5 py-2 rounded dark:bg-indigo-900 dark:text-indigo-300">{`₹ ${course?.price as string}`}</span>
+                <p className="mb-8 mt-4 block font-popins text-base font-normal leading-relaxed text-gray-700 antialiased">
                   {course?.description}
                 </p>
 
                 <button
-                  className="flex select-none items-center gap-2 rounded-lg py-3 px-6 text-center align-middle font-sans text-xs font-bold uppercase text-base-100 transition-all hover:bg-base-100 hover:text-white  disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+                  className="flex select-none items-center gap-2 rounded-lg py-3 px-6 text-center align-middle font-sans text-xs bg-base-100 text-white font-bold uppercase  transition-all hover:bg-base-100 hover:text-white  disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
                   type="button"
                   data-modal-target={`editcourse${course?._id}`}
                   data-modal-toggle={`editcourse${course?._id}`}
