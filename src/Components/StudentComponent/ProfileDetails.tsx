@@ -237,7 +237,7 @@ function ProfileDetails() {
                 <h2 className="text-lg font-bold text-gray-600 mb-4">
                   About Me
                 </h2>
-                <p className="text-gray-700">{student?.about}</p>
+                <p className="text-gray-700">{studentDetails.student.about}</p>
 
                 <h2 className="text-xl font-bold text-gray-600 mt-6 mb-4">
                   Recently completed Courses
