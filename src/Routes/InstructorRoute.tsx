@@ -18,7 +18,7 @@ import NotFound from "../Pages/Instructors/NotFound";
 import { useEffect } from "react";
 import {  useSelector } from "react-redux";
 import { InstructorType } from "../Interface/interfaces";
-import ChangePasswordPage from "../Pages/Instructors/ChangePasswordPage";
+
 
 function InstructorRoute() {
   const instructor = useSelector((state:InstructorType)=> state.instructor.instructor)

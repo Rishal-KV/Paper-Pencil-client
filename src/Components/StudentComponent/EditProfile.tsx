@@ -5,7 +5,6 @@ import { Student, studentType } from "../../Interface/interfaces";
 import studentAPi from "../../API/studentAPI";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "sonner";
-import { UseDispatch } from "react-redux";
 import { studentLogin } from "../../Redux/slice/student";
 function EditProfile() {
   const studentDetails = useSelector((state: studentType) => state.student);
