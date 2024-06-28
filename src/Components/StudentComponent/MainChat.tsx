@@ -1,5 +1,4 @@
 import { SyntheticEvent, useEffect, useRef, useState } from "react";
-
 import { socket } from "../../Config/socket";
 import { useSelector } from "react-redux";
 import studentAPi from "../../API/studentAPI";
@@ -16,47 +15,52 @@ function MainChat({
   instructorDetails: Instructor | undefined;
 }) {
   const [text, setText] = useState("");
-
   const student = useSelector((state: any) => state.student);
   const sender = student.student?._id;
-  const [conversation, setConverstaion] = useState<any[]>([]);
+  const [conversation, setConversation] = useState<any[]>([]);
+  
   useEffect(() => {
     studentAPi.getConversation(conversationId).then((res) => {
-      setConverstaion(res.response);
+      setConversation(res.response);
     });
   }, [conversationId]);
 
   useEffect(() => {
-    socket.on("newMessage", ({ newMessage }) => {
-      setConverstaion((prevMessages) => {
+    const handleNewMessage = ({ newMessage }: { newMessage: any }) => {
+      setConversation((prevMessages) => {
         const messageIds = prevMessages.map((message) => message._id);
         if (!messageIds.includes(newMessage._id)) {
           return [...prevMessages, newMessage];
         }
         return prevMessages;
       });
-    });
-  }, []);
- 
+    };
 
-  // useEffect(() => {
-  //   socket.on("newMessage", ({ newMessage }) => {
-  //     setConverstaion((prevConversation) => [...prevConversation, newMessage]);
-  //   });
-  // }, []);
+    socket.on("newMessage", handleNewMessage);
+
+    return () => {
+      socket.off("newMessage", handleNewMessage);
+    };
+  }, [conversation]);
+
   const navigateTo = (url: string) => {
     window.open(url, "_blank");
   };
+
   const sendMess = (e: SyntheticEvent) => {
     e.preventDefault();
+    if (text.trim() === "") return;
 
     socket.emit("sendMessage", { text, sender, receiver });
     setText("");
   };
+
   const messagesEndRef = useRef<HTMLDivElement>(null);
+
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
+
   useEffect(() => {
     scrollToBottom();
   }, [conversation]);
@@ -81,37 +85,14 @@ function MainChat({
         ) : (
           conversation.map((chats: any) => (
             <div
-              className={`flex ${
-                chats.from === sender ? "justify-end" : ""
-              } mb-4 cursor-pointer`}
+              className={`flex ${chats.from === sender ? "justify-end" : ""} mb-4 cursor-pointer`}
               key={chats._id}
             >
-              <div
-                ref={messagesEndRef}
-                className=" flex items-center justify-center "
-              >
-                {/* <img
-        src="https://placehold.co/200x/ffa8e4/ffffff.svg?text=ʕ•́ᴥ•̀ʔ&font=Lato"
-        alt="User Avatar"
-        className="w-8 h-8 rounded-full"
-      /> */}
+              <div className="flex items-center justify-center">
+                {/* Placeholder for Avatar */}
               </div>
               {chats.text.includes("https://paper-pencil.vercel.app/video") ? (
                 <div className="flex flex-col items-center">
-                  {/* <button
-                    className="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-teal-300 to-lime-300 group-hover:from-teal-300 group-hover:to-lime-300 dark:text-white dark:hover:text-gray-900 focus:ring-4 focus:outline-none focus:ring-lime-200 dark:focus:ring-lime-800"
-                    onClick={() =>{
-                      const urlParams = new URL(chats.text).searchParams;
-                      const roomID = urlParams.get('roomID');
-                      
-                    
-                      window.open(`${chats.text}&roomID=${roomID}`, "_blank");
-                    }}
-                  >
-                    <span className="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
-                      Join the meet <FontAwesomeIcon icon={faVideo} />
-                    </span>
-                  </button> */}
                   <div className="max-w-lg mx-auto bg-white rounded-lg shadow-lg p-4 sm:p-6 lg:p-8 mt-4 sm:mt-8">
                     <h1 className="text-lg sm:text-xl font-bold text-gray-800 mb-2 sm:mb-4">
                       Meet Link
@@ -120,8 +101,7 @@ function MainChat({
                       Hello,
                     </p>
                     <p className="text-gray-600 mb-2 sm:mb-4 sm:block hidden">
-                      You have received a Meet link. Please click the button
-                      below to join the meeting:
+                      You have received a Meet link. Please click the button below to join the meeting:
                     </p>
                     <p
                       onClick={() => navigateTo(chats.text)}
@@ -130,8 +110,7 @@ function MainChat({
                       Join Meeting
                     </p>
                     <p className="text-gray-600 mt-2 sm:mt-4 sm:block hidden">
-                      If the button above does not work, you can also copy and
-                      paste the following link into your browser:
+                      If the button above does not work, you can also copy and paste the following link into your browser:
                     </p>
                     <p className="text-gray-600 break-words sm:block hidden">
                       {chats.text.substring(0, 60)}
@@ -145,7 +124,7 @@ function MainChat({
                   </div>
                 </div>
               ) : (
-                <div className="flex flex-col max-w-96 ">
+                <div className="flex flex-col max-w-96">
                   <div className="bg-blue-400 rounded-lg p-3 mb-1">
                     <p className="text-white">{chats.text}</p>
                   </div>
@@ -157,17 +136,11 @@ function MainChat({
             </div>
           ))
         )}
+        <div ref={messagesEndRef} />
       </div>
-      {receiver ? (
-        <footer className=" border-t border-gray-300 py-2 px-4   w-full ">
-          {/* <div className=""> */}
+      {receiver && (
+        <footer className="border-t border-gray-300 py-2 px-4 w-full">
           <form className="flex items-center" onSubmit={sendMess}>
-            {/* <input
-      value={text}
-      onChange={(e) => setText(e.target.value)}
-      placeholder="Type a message..."
-      className="w-full p-2 rounded-md border border-gray-400 focus:outline-none focus:border-blue-500"
-    /> */}
             <InputEmoji
               value={text}
               onChange={setText}
@@ -175,20 +148,16 @@ function MainChat({
               shouldReturn={false}
               shouldConvertEmojiToImage={false}
             />
-
             {text && (
               <button
                 type="submit"
-                className="bg-indigo-500 text-white px-4 py-2  rounded-md ml-2"
+                className="bg-indigo-500 text-white px-4 py-2 rounded-md ml-2"
               >
                 Send
               </button>
             )}
           </form>
-          {/* </div> */}
         </footer>
-      ) : (
-        ""
       )}
     </div>
   );
