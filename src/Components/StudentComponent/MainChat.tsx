@@ -1,4 +1,4 @@
-import { SyntheticEvent, useCallback, useEffect, useRef, useState } from "react";
+import { SyntheticEvent, useEffect, useRef, useState } from "react";
 import { socket } from "../../Config/socket";
 import { useSelector } from "react-redux";
 import studentAPi from "../../API/studentAPI";
@@ -18,29 +18,30 @@ function MainChat({
   const student = useSelector((state: any) => state.student);
   const sender = student.student?._id;
   const [conversation, setConversation] = useState<any[]>([]);
-
+  
   useEffect(() => {
     studentAPi.getConversation(conversationId).then((res) => {
       setConversation(res.response);
     });
   }, [conversationId]);
 
-  const handleNewMessage = useCallback(({ newMessage }: { newMessage: any }) => {
-    setConversation((prevMessages) => {
-      const messageIds = prevMessages.map((message) => message._id);
-      if (!messageIds.includes(newMessage._id)) {
-        return [...prevMessages, newMessage];
-      }
-      return prevMessages;
-    });
-  }, []);
-
   useEffect(() => {
+    const handleNewMessage = ({ newMessage }: { newMessage: any }) => {
+      setConversation((prevMessages) => {
+        const messageIds = prevMessages.map((message) => message._id);
+        if (!messageIds.includes(newMessage._id)) {
+          return [...prevMessages, newMessage];
+        }
+        return prevMessages;
+      });
+    };
+
     socket.on("newMessage", handleNewMessage);
+
     return () => {
       socket.off("newMessage", handleNewMessage);
     };
-  }, [handleNewMessage]);
+  }, [conversation]);
 
   const navigateTo = (url: string) => {
     window.open(url, "_blank");
@@ -50,19 +51,7 @@ function MainChat({
     e.preventDefault();
     if (text.trim() === "") return;
 
-    const newMessage = {
-      text,
-      sender,
-      receiver,
-      _id: Date.now().toString(), // Temporary ID for optimistic UI update
-      createdAt: new Date().toISOString(),
-    };
-
-    // Optimistically update the UI
-    setConversation((prevMessages) => [...prevMessages, newMessage]);
-
     socket.emit("sendMessage", { text, sender, receiver });
-
     setText("");
   };
 
@@ -77,7 +66,7 @@ function MainChat({
   }, [conversation]);
 
   return (
-    <div className="flex flex-col h-screen bg-white">
+    <div className="flex flex-col h-screen bg-white ">
       {receiver && (
         <header className="bg-blue-400 p-4 text-gray-700">
           <h1 className="text-2xl font-semibold text-white">
@@ -96,7 +85,7 @@ function MainChat({
         ) : (
           conversation.map((chats: any) => (
             <div
-              className={`flex ${chats.sender === sender ? "justify-end" : ""} mb-4 cursor-pointer`}
+              className={`flex ${chats.from === sender ? "justify-end" : ""} mb-4 cursor-pointer`}
               key={chats._id}
             >
               <div className="flex items-center justify-center">
