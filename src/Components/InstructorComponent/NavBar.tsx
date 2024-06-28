@@ -50,7 +50,7 @@ function Navbar() {
     <div className="dropdown dropdown-end md:block hidden">
       <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
         <div className="w-10 rounded-full">
-          <img alt="User avatar" src={instructor.instructor.imageUrl ? instructor.instructor.imageUrl : `https://img.freepik.com/free-photo/view-3d-confident-businessman_23-2150709932.jpg?t=st=1718777702~exp=1718781302~hmac=84104a32957c743ad77b802cd300b5e2aac6c355000b71fb704dd9d54ac143ce&w=740`} />
+          <img alt="User avatar" src={instructor?.instructor?.imageUrl ? instructor.instructor.imageUrl : `https://img.freepik.com/free-photo/view-3d-confident-businessman_23-2150709932.jpg?t=st=1718777702~exp=1718781302~hmac=84104a32957c743ad77b802cd300b5e2aac6c355000b71fb704dd9d54ac143ce&w=740`} />
         </div>
       </div>
       <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-50 p-2 shadow bg-base-100 rounded-box w-52">

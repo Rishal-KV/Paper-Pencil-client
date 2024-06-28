@@ -10,30 +10,15 @@ import IsLoggedOut from "../Middleware/Instructor/IsLoggedOut";
 import EditProfilePage from "../Pages/Instructors/EditProfilePage";
 import EnrollmentPage from "../Pages/Instructors/EnrollmentPage";
 import Chat from "../Pages/Instructors/Chat";
-import { initSocket, socket } from "../Config/socket";
-
 import QuestionPage from "../Pages/Instructors/QuestionList";
 import QuestionManagement from "../Pages/Instructors/QuestionManagement";
 import NotFound from "../Pages/Instructors/NotFound";
-import { useEffect } from "react";
-import {  useSelector } from "react-redux";
-import { InstructorType } from "../Interface/interfaces";
+
 
 
 function InstructorRoute() {
-  const instructor = useSelector((state:InstructorType)=> state.instructor.instructor)
- 
- useEffect(()=>{
-  initSocket(instructor?._id as string)
-
   
-
-  return ()=>{
-    socket.disconnect()
-  }
-
  
- },[])
 
 
  

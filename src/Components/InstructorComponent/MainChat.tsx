@@ -7,7 +7,7 @@ import axios from "axios";
 import InputEmoji from "react-input-emoji";
 import { useRef } from "react";
 import { MdVideoCall } from "react-icons/md";
-
+import { initSocket } from "../../Config/socket";
 function MainChat({
   receiver,
   conversationId,
@@ -21,7 +21,18 @@ function MainChat({
   const [text, setText] = useState("");
   const instructor = useSelector((state: any) => state.instructor);
   const sender = instructor.instructor._id;
-
+  useEffect(()=>{
+    initSocket(instructor?._id as string)
+  
+    
+  
+    return ()=>{
+      socket.disconnect()
+    }
+  
+   
+   },[])
+  
   function randomID(len: number) {
     let result = "";
     if (result) return result;
