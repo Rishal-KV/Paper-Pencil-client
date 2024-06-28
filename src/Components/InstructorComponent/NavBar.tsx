@@ -60,7 +60,7 @@ function Navbar() {
             
           </Link>
         </li>
-        <li><Link to="/instructor/editprofile">profile Settings</Link></li>
+        {/* <li><Link to="/instructor/editprofile">profile Settings</Link></li> */}
         <li><a onClick={logout}>Logout</a></li>
       </ul>
     </div>
