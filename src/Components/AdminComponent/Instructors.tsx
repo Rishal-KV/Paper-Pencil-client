@@ -30,7 +30,7 @@ function Instructors() {
     // console.log(stud);
 
     fetchStudent();
-  }, [Action,page]);
+  }, [Action, page]);
   return (
     <div>
       <div className="h-screen ">
@@ -38,10 +38,13 @@ function Instructors() {
           <div className="p-4  dark:border-gray-700">
             <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
               <Table action={instructorAction} data={instructors} />
+{/* 
               <div className="flex justify-center p-5">
                 <p
                   onClick={() => setPage(page - 1)}
-                  className={`mx-1 px-3 py-2 bg-gray-200 ${page == 1  ? 'hidden' : ''} text-gray-500 font-medium rounded-md cursor-pointer`}
+                  className={`mx-1 px-3 py-2 bg-gray-200 ${
+                    page == 1 ? "hidden" : ""
+                  } text-gray-500 font-medium rounded-md cursor-pointer`}
                 >
                   Previous
                 </p>
@@ -58,7 +61,35 @@ function Instructors() {
                 ))}
 
                 <p
-                  className={`mx-1 px-3 py-2   ${totalPage == page ? "hidden" : ""} bg-gray-200 text-gray-500 font-medium rounded-md cursor-pointer`}
+                  className={`mx-1 px-3 py-2   ${
+                    totalPage < page ? "hidden" : ""
+                  } bg-gray-200 text-gray-500 font-medium rounded-md cursor-pointer`}
+                  onClick={() => setPage(page + 1)}
+                >
+                  Next
+                </p>
+              </div> */}
+               <div className="flex justify-center p-5">
+                <p
+                  onClick={() => setPage(page - 1)}
+                  className={`mx-1 px-3 py-2 bg-gray-200 ${page == 1  ? 'hidden' : ''} text-gray-500 font-medium rounded-md cursor-pointer`}
+                >
+                  Previous
+                </p>
+
+                {Array.from({ length: totalPage + 1 }, (_, index) => (
+                  <p
+                    onClick={() => setPage(index + 1)}
+                    className={`mx-1 px-3  ${
+                      index + 1 == page ? "bg-white text-black" : "bg-gray-200"
+                    } py-2   font-medium  rounded-md cursor-pointer`}
+                  >
+                    {index + 1}
+                  </p>
+                ))}
+
+                <p
+                  className={`mx-1 px-3 py-2   ${totalPage < page ? "hidden" : ""} bg-gray-200 text-gray-500 font-medium rounded-md cursor-pointer`}
                   onClick={() => setPage(page + 1)}
                 >
                  Next

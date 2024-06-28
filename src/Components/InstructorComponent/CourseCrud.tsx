@@ -435,7 +435,7 @@ function AddChapters() {
                     htmlFor="description"
                     className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                   >
-                    Product Description
+                    Course Description
                   </label>
                   <textarea
                     onBlur={handleBlur}

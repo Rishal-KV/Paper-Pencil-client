@@ -121,7 +121,7 @@ function CourseTable() {
                 ))}
 
                 <p
-                  className={`mx-1 px-3 py-2   ${totalPage == page ? "hidden" : ""} bg-gray-200 text-gray-500 font-medium rounded-md cursor-pointer`}
+                  className={`mx-1 px-3 py-2   ${totalPage < page ? "hidden" : ""} bg-gray-200 text-gray-500 font-medium rounded-md cursor-pointer`}
                   onClick={() => setPage(page + 1)}
                 >
                  Next

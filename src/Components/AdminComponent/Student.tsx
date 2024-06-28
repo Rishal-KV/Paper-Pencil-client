@@ -47,7 +47,7 @@ function Student() {
                   Previous
                 </p>
 
-                {Array.from({ length: totalPage }, (_, index) => (
+                {Array.from({ length: totalPage + 1 }, (_, index) => (
                   <p
                     onClick={() => setPage(index + 1)}
                     className={`mx-1 px-3  ${
@@ -59,7 +59,7 @@ function Student() {
                 ))}
 
                 <p
-                  className={`mx-1 px-3 py-2   ${totalPage == page ? "hidden" : ""} bg-gray-200 text-gray-500 font-medium rounded-md cursor-pointer`}
+                  className={`mx-1 px-3 py-2   ${totalPage < page ? "hidden" : ""} bg-gray-200 text-gray-500 font-medium rounded-md cursor-pointer`}
                   onClick={() => setPage(page + 1)}
                 >
                  Next
