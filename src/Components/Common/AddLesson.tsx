@@ -126,6 +126,8 @@ function AddLesson({ chapterId, lessonLoad, setLessonLoad }: any) {
                     onBlur={handleBlur}
                     id="lesson"
                     name="lesson"
+
+                    color="black"
                     value={value ? [value] : []}
                     onChange={updateFiles}
                   />
