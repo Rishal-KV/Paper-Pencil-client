@@ -156,7 +156,7 @@ function ProfileDetails() {
                 <div className="mt-6 flex flex-wrap gap-4 justify-center">
                   <button
                     onClick={() => navigateTo("edit_profile")}
-                    className="btn btn-ghost"
+                    className="btn btn-ghost cursor-pointer"
                   >
                     Edit Profile
                   </button>
@@ -173,14 +173,14 @@ function ProfileDetails() {
                 <ul>
                   <li
                     onClick={() => navigateTo("profile")}
-                    className="mb-2 font-Poppins text-gray-500 underline"
+                    className="mb-2 font-Poppins text-gray-500 underline cursor-pointer"
                   >
                     Profile
                   </li>
                   {!studentDetails?.student?.googleAuth ? (
                     <li
                       onClick={() => navigateTo("change_password")}
-                      className="mb-2 font-Poppins text-gray-500 underline"
+                      className="mb-2 font-Poppins text-gray-500 underline cursor-pointer"
                     >
                       Change Password
                     </li>

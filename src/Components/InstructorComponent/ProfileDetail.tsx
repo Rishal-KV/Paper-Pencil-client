@@ -166,7 +166,7 @@ function ProfileDetail() {
                   
                     <li
                     onClick={() => navigateTo("change_password")}
-                    className="mb-2 font-Poppins underline text-gray-500"
+                    className="mb-2 font-Poppins underline text-gray-500 cursor-pointer"
                   >
                     Change Password
                   </li>
@@ -174,7 +174,7 @@ function ProfileDetail() {
 
                   <li
                       onClick={() => navigateTo("profile")}
-                      className="mb-2 font-Poppins underline text-gray-500"
+                      className="mb-2 font-Poppins underline text-gray-500 cursor-pointer"
                     >
                       Profile
                     </li>
