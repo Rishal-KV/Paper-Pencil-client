@@ -56,22 +56,22 @@ function Courses({
   const resetFilter = () => {
     setSelectedCategory("");
     setSelectedPrice("asc");
-    selectCategory({ target: { value: "" } } as React.ChangeEvent<HTMLSelectElement>);
-    selectPrice({ target: { value: "asc" } } as React.ChangeEvent<HTMLSelectElement>);
+    selectCategory({
+      target: { value: "" },
+    } as React.ChangeEvent<HTMLSelectElement>);
+    selectPrice({
+      target: { value: "asc" },
+    } as React.ChangeEvent<HTMLSelectElement>);
   };
 
   const handleCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedCategory(e.target.value);
     selectCategory(e);
-    
-    
   };
 
   const handlePriceChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedPrice(e.target.value);
     selectPrice(e);
-   
-    
   };
 
   return (
@@ -143,11 +143,13 @@ function Courses({
               <option value="" disabled>
                 Choose a category
               </option>
-              {categoryList.map((category) => (
-                <option key={category._id} value={category._id}>
-                  {category.name}
-                </option>
-              ))}
+              {categoryList
+                .filter((category: any) => category.is_blocked === false)
+                .map((category) => (
+                  <option key={category._id} value={category._id}>
+                    {category.name}
+                  </option>
+                ))}
             </select>
           </div>
         </div>
@@ -159,68 +161,67 @@ function Courses({
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 lg:gap-10 py-10">
-  {courses.length > 0 ? (
-    courses.map((course: Course) => (
-      <div key={course._id} className="flex justify-center">
-        <Card
-          key={course._id}
-          favourites={false}
-          learning={false}
-          mycourse={false}
-          course={course}
-        />
-      </div>
-    ))
-  ) : (
-    <div className="text-center">No courses found.</div>
-  )}
-</div>
+          {courses.length > 0 ? (
+  courses.filter((course: any) => course.category.is_blocked === false).map((course: Course) => (
+    <div key={course._id} className="flex justify-center">
+      <Card
+        key={course._id}
+        favourites={false}
+        learning={false}
+        mycourse={false}
+        course={course}
+      />
+    </div>
+  ))
+) : (
+  <div className="text-center">No courses found.</div>
+)}
 
-          {
-            courses.length > 0 &&  
+          </div>
+
+          {courses.length > 0 && (
             <div className="flex items-center justify-center">
-
-            
-            <ul className="inline-flex">
-              <li>
-                <button
-                  onClick={() => setSelectedPage(1)}
-                  className="h-8 px-5 text-blue-400 font-bold transition-colors duration-15 border border-r-0 border-gray-500 rounded-l-lg focus:shadow-outline hover:bg-indigo-100"
-                >
-                  First
-                </button>
-              </li>
-              {courses && Array.from({ length: totalPages }, (_, index) => (
-                <li key={index + 1}>
-                  
+              <ul className="inline-flex">
+                <li>
                   <button
-                    onClick={() => setSelectedPage(index + 1)}
-                    className={`h-8 px-5 ${
-                      index + 1 === page
-                        ? "bg-blue-400 text-white"
-                        : "text-blue-400"
-                    } font-bold transition-colors duration-150  border border-r-0 border-gray-500 focus:shadow-outline hover:bg-indigo-100`}
+                    onClick={() => setSelectedPage(1)}
+                    className="h-8 px-5 text-blue-400 font-bold transition-colors duration-15 border border-r-0 border-gray-500 rounded-l-lg focus:shadow-outline hover:bg-indigo-100"
                   >
-                    {index + 1}
+                    First
                   </button>
                 </li>
-              ))}
-              <li>
-                {page !== totalPages ? (
-                  <button
-                    onClick={() => setSelectedPage((prev:number) => prev + 1)}
-                    className="h-8 px-5 text-blue-400 font-bold transition-colors duration-150 bg-white border border-gray-500 rounded-r-lg focus:shadow-outline "
-                  >
-                    Next
-                  </button>
-                ) : (
-                  ""
-                )}
-              </li>
-            </ul>
-          </div>
-          }
-     
+                {courses &&
+                  Array.from({ length: totalPages }, (_, index) => (
+                    <li key={index + 1}>
+                      <button
+                        onClick={() => setSelectedPage(index + 1)}
+                        className={`h-8 px-5 ${
+                          index + 1 === page
+                            ? "bg-blue-400 text-white"
+                            : "text-blue-400"
+                        } font-bold transition-colors duration-150  border border-r-0 border-gray-500 focus:shadow-outline hover:bg-indigo-100`}
+                      >
+                        {index + 1}
+                      </button>
+                    </li>
+                  ))}
+                <li>
+                  {page !== totalPages ? (
+                    <button
+                      onClick={() =>
+                        setSelectedPage((prev: number) => prev + 1)
+                      }
+                      className="h-8 px-5 text-blue-400 font-bold transition-colors duration-150 bg-white border border-gray-500 rounded-r-lg focus:shadow-outline "
+                    >
+                      Next
+                    </button>
+                  ) : (
+                    ""
+                  )}
+                </li>
+              </ul>
+            </div>
+          )}
         </div>
       </div>
     </div>

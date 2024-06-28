@@ -117,7 +117,7 @@ function Coursedetails() {
         <div className=" md:w-1/2 px-3 py-2 shadow-md bg-gray-100 mt-2 ">
           <h1 className="font-Poppins text-black text-2xl">Curriculam</h1>
           {chapters?.map((chapters: chapter, index: number) => (
-            <div key={index} className="bg-white px-2 py-3  mt-2 rounded-md  ">
+            <div key={index} className="bg-white px-2 py-3  mt-2 rounded-md cursor-pointer  ">
               <Chapter toggleChapter={toggleChapter} chapter={chapters} />
               {showLesson === chapters._id &&
                 chapters.lessons?.map((lesson) => (
@@ -179,7 +179,7 @@ function Coursedetails() {
       </div>
       <div className="swiper-container  overflow-hidden mt-3">
         <div className="swiper-wrapper px-2 py-2">
-          { review.length == 0 ? <p>"No review and Rating</p> : review.map((review, index) => (
+          { review.length == 0 ? <p className="text-black">No review and Rating</p> : review.map((review, index) => (
             <Reviews key={index} Review={review} />
           ))}
         </div>

@@ -243,11 +243,11 @@ function CoursePlay() {
               className="md:w-auto px-3 py-2 shadow-md bg-white-100 mt-2"
             >
               <div className="flex items-center justify-between">
-                <h1
+                <h1 
                   onClick={() =>
                     toggleChapter(chapter?._id, chapter.description)
                   }
-                  className="font-extrabold text-gray-600"
+                  className="font-extrabold text-gray-600 cursor-pointer"
                 >
                   {chapter.title}
                 </h1>
@@ -259,7 +259,7 @@ function CoursePlay() {
                 chapter.lessons?.map((lesson) => (
                   <div
                     key={lesson._id}
-                    className="bg-gray-200 px-2 py-1 mt-3 rounded-md flex items-center justify-between"
+                    className="bg-gray-200 cursor-pointer px-2 py-1 mt-3 rounded-md flex items-center justify-between"
                   >
                     <p
                      

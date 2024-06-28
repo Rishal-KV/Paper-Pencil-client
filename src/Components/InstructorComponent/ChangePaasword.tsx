@@ -23,8 +23,6 @@ const ChangePassword: React.FC = () => {
           newPassword
         )
         .then((res) => {
-          console.log(res, "ress");
-
           if (res.status) {
             formik.resetForm();
             toast.success(res.message);

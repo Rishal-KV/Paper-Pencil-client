@@ -17,6 +17,7 @@ function Category() {
       let response = await adminAPI.getCategory();
 
       setCategory(response.data.category);
+      setRefresh(!refresh)
     } catch (error) {
       console.log(error);
     }
@@ -32,7 +33,7 @@ function Category() {
           <button
             data-modal-target="crud-modal"
             data-modal-toggle="crud-modal"
-            className="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+            className="block  bg-gray-100 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center  text-black"
             type="button"
           >
             Add Category

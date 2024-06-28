@@ -35,6 +35,7 @@ function ProfileDetails() {
       setPreview(objectUrl);
     }
   };
+  console.log(studentDetails,"student");
   
   function navigateTo(link: string) {
     switch (link) {
@@ -156,7 +157,7 @@ function ProfileDetails() {
                 <div className="mt-6 flex flex-wrap gap-4 justify-center">
                   <button
                     onClick={() => navigateTo("edit_profile")}
-                    className="btn btn-ghost cursor-pointer"
+                    className="btn btn-ghost cursor-pointer font-Poppins text-black"
                   >
                     Edit Profile
                   </button>

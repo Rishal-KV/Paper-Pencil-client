@@ -147,7 +147,7 @@ function ProfileDetail() {
                 <div className="mt-6 flex flex-wrap gap-4 justify-center">
                   <button
                     onClick={() => setPage("edit_profile")}
-                    className="btn btn-ghost"
+                    className="btn text-black btn-ghost"
                   >
                     Edit Profile
                   </button>
@@ -159,7 +159,12 @@ function ProfileDetail() {
                   Links
                 </span>
                 <ul>
-                  
+                <li
+                      onClick={() => navigateTo("profile")}
+                      className="mb-2 font-Poppins underline text-gray-500 cursor-pointer"
+                    >
+                      Profile
+                    </li>
                   {instructor.instructor.googleAuth ? (
                     ""
                   ) : (
@@ -172,12 +177,7 @@ function ProfileDetail() {
                   </li>
                   )}
 
-                  <li
-                      onClick={() => navigateTo("profile")}
-                      className="mb-2 font-Poppins underline text-gray-500 cursor-pointer"
-                    >
-                      Profile
-                    </li>
+                 
                 </ul>
               </div>
             </div>
@@ -217,10 +217,10 @@ function ProfileDetail() {
                     />
                   </div>
                 </div>
-                <h2 className="text-xl  mb-4 font-Poppins">About Me</h2>
+                <h2 className="text-xl  mb-4 font-Poppins text-gray-500">About Me</h2>
                 <p className="text-gray-700">{instructor.instructor.about}</p>
 
-                <h2 className="text-xl font-Poppins mt-6 mb-4">
+                <h2 className="text-xl font-Poppins mt-6 mb-4 text-gray-500">
                   Recently created courses
                 </h2>
                 {latestCourse.splice(0, 4).map((course: Course) => (

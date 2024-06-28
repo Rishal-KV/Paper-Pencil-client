@@ -27,7 +27,7 @@ function CourseDetails() {
       <div className="h-screen bg-white ">
         <div className="p-4 sm:ml-64 ">
           <div className="p-4  dark:border-gray-700">
-            <div
+            {/* <div
               className="h-96 w-full flex flex-col justify-center rounded-md"
               style={{
                 backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(${
@@ -50,8 +50,34 @@ function CourseDetails() {
                     chapters[0].course.category.name}
                 </h1>
               </div>
+            </div> */}
+            <div className="relative flex w-full flex-col  md:flex-row rounded-xl bg-white bg-clip-border text-gray-700 shadow-md">
+              <div className="relative m-0  md:w-2/5   shrink-0 overflow-hidden rounded-xl md:rounded-r-none bg-white bg-clip-border text-gray-700">
+                <img
+                  src={
+                    chapters && chapters[0].course && chapters[0].course.image
+                  }
+                  alt="Course Image"
+                />
+              </div>
+              <div className="p-6">
+                {/* <h6 className="mb-4 block font-sans text-base font-semibold uppercase leading-relaxed tracking-normal text-pink-500 antialiased">
+        {course?.name}
+      </h6> */}
+                <h4 className="mb-2 capitalize block font-Poppins text-2xl font-semibold leading-snug tracking-normal text-blue-gray-900 antialiased">
+                  {chapters && chapters[0].course && chapters[0].course.name}
+                </h4>
+                <span className="bg-red-100   text-red-800 text-sm font-medium me-2 px-2.5 py-2 rounded dark:bg-red-900 dark:text-red-300">
+                  {chapters &&
+                    chapters[0].course?.category &&
+                    typeof chapters[0].course.category == "object" &&
+                    chapters[0].course.category.name}
+                </span>
+                <span className="bg-indigo-100 text-indigo-800 text-sm font-medium me-2 px-2.5 py-2 rounded dark:bg-indigo-900 dark:text-indigo-300">{`₹ ${
+                  chapters && chapters[0].course && chapters[0].course.price
+                }`}</span>
+              </div>
             </div>
-
             <div className="relative overflow-x-auto shadow-md px-4 flex flex-col gap-4 mt-10">
               {chapters?.map((chapter: any, index) => (
                 <div

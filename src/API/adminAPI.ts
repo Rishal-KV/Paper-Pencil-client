@@ -30,9 +30,9 @@ const adminAPI = {
       throw error;
     }
   },
-  students: async () => {
+  students: async (page:number) => {
     try {
-      let studentResponse = await axiosInstance.get("/admin/student_details");
+      let studentResponse = await axiosInstance.get(`/admin/student_details?page=${page}`);
       return studentResponse;
     } catch (error) {
       throw error;
@@ -48,9 +48,9 @@ const adminAPI = {
       throw error;
     }
   },
-  instructors: async () => {
+  instructors: async (page:number) => {
     try {
-      let instructors = await axiosInstance.get("/admin/instructor_details");
+      let instructors = await axiosInstance.get(`/admin/instructor_details?page=${page}`);
       return instructors;
     } catch (error) {
       throw error;
@@ -98,9 +98,9 @@ const adminAPI = {
       throw error;
     }
   },
-  fetchCourse: async () => {
+  fetchCourse: async (page:number) => {
     try {
-      let response = await axiosInstance.get("/admin/course");
+      let response = await axiosInstance.get(`/admin/course?page=${page}`);
       return response;
     } catch (error) {
       throw error;

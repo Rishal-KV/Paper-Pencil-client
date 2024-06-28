@@ -19,7 +19,7 @@ function Table({ action, data }: any) {
         </tr>
       </thead>
       <tbody>
-        {data && data.map((data: any, index: any) => (
+        {data.length > 0 && data?.map((data: any, index: any) => (
           <tr key={data._id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
             <td className="px-6 py-4">{index + 1}</td>
             <td className="px-6 py-4">{data.name}</td>

@@ -4,6 +4,8 @@ import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
 
 function CourseTable() {
+    const [totalPage, setTotalPage] = useState<number>(0);
+    const [page, setPage] = useState<number>(1);
   let navigate = useNavigate();
   let [load, setLoad] = useState(false);
   async function action(id: string) {
@@ -21,16 +23,18 @@ function CourseTable() {
   useEffect(() => {
     async function fetch_course() {
       try {
-        let response = await adminAPI.fetchCourse();
-        console.log(response);
+        let response = await adminAPI.fetchCourse(page as number);
+        console.log(response,"okk");
 
         setCourse(response.data.course);
+        setTotalPage(response.data.totalPage)
+        
       } catch (error) {
         console.log(error);
       }
     }
     fetch_course();
-  }, [load]);
+  }, [load,page]);
   return (
     <div className="relative overflow-x-auto">
       <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
@@ -83,6 +87,48 @@ function CourseTable() {
           ))}
         </tbody>
       </table>
+      <div className="flex justify-center p-4">
+            {/* <nav className="bg-gray-200 rounded-full px-4 py-2">
+              <ul className="flex text-gray-600 gap-4 font-medium py-2">
+                {Array.from({ length: totalPage }, (_, index) => (
+                  <li>
+                    <p onClick={()=>setPage(index+1)}className={`rounded-full px-4 py-2 ${page === index  + 1 ? " bg-white" : ""} text-gray-600 cursor-pointer`}>
+                      {index + 1}
+                    </p>
+                  </li>
+                ))}
+              </ul>
+            </nav> */}
+            <div className="mt-8">
+            <div className="flex justify-center p-5">
+                
+                <p
+                  onClick={() => setPage(page - 1)}
+                  className={`mx-1 px-3 py-2 bg-gray-200 ${page == 1  ? 'hidden' : ''} text-gray-500 font-medium rounded-md cursor-pointer`}
+                >
+                  Previous
+                </p>
+
+                {  Array.from({ length: totalPage }, (_, index) => (
+                  <p
+                    onClick={() => setPage(index + 1)}
+                    className={`mx-1 px-3  ${
+                      index + 1 == page ? "bg-white text-black" : "bg-gray-200"
+                    } py-2   font-medium  rounded-md cursor-pointer`}
+                  >
+                    {index + 1}
+                  </p>
+                ))}
+
+                <p
+                  className={`mx-1 px-3 py-2   ${totalPage == page ? "hidden" : ""} bg-gray-200 text-gray-500 font-medium rounded-md cursor-pointer`}
+                  onClick={() => setPage(page + 1)}
+                >
+                 Next
+                </p>
+              </div>
+</div>
+          </div>
     </div>
   );
 }
