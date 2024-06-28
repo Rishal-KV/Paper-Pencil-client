@@ -89,6 +89,7 @@ function ChatSide({ chatId }: { chatId: string }) {
         <div className="overflow-y-auto flex-grow p-3 mb-9 pb-20">
           {chatList.map((item: StudentChat) => (
             <div
+            key={item._id}
               onClick={() =>
                 setData(
                   item._id,

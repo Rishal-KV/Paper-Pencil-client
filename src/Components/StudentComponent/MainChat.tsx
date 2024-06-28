@@ -2,9 +2,9 @@ import { SyntheticEvent, useEffect, useRef, useState } from "react";
 import { socket } from "../../Config/socket";
 import { useSelector } from "react-redux";
 import studentAPi from "../../API/studentAPI";
-import { Instructor } from "../../Interface/interfaces";
+import { Instructor, studentType } from "../../Interface/interfaces";
 import InputEmoji from "react-input-emoji";
-
+import { initSocket } from "../../Config/socket";
 function MainChat({
   receiver,
   conversationId,
@@ -15,10 +15,10 @@ function MainChat({
   instructorDetails: Instructor | undefined;
 }) {
   const [text, setText] = useState("");
-  const student = useSelector((state: any) => state.student);
-  const sender = student.student?._id;
+  const student = useSelector((state: studentType) => state.student.student);
+  const sender = student._id;
   const [conversation, setConversation] = useState<any[]>([]);
-  
+
   useEffect(() => {
     studentAPi.getConversation(conversationId).then((res) => {
       setConversation(res.response);
@@ -26,7 +26,9 @@ function MainChat({
   }, [conversationId]);
 
   useEffect(() => {
-    const handleNewMessage = ({ newMessage }: { newMessage: any }) => {
+    socket.on("newMessage", ({ newMessage }) => {
+      console.log(newMessage, "new messs");
+
       setConversation((prevMessages) => {
         const messageIds = prevMessages.map((message) => message._id);
         if (!messageIds.includes(newMessage._id)) {
@@ -34,14 +36,8 @@ function MainChat({
         }
         return prevMessages;
       });
-    };
-
-    socket.on("newMessage", handleNewMessage);
-
-    return () => {
-      socket.off("newMessage", handleNewMessage);
-    };
-  }, [conversation]);
+    });
+  }, []);
 
   const navigateTo = (url: string) => {
     window.open(url, "_blank");
@@ -85,7 +81,9 @@ function MainChat({
         ) : (
           conversation.map((chats: any) => (
             <div
-              className={`flex ${chats.from === sender ? "justify-end" : ""} mb-4 cursor-pointer`}
+              className={`flex ${
+                chats.from === sender ? "justify-end" : ""
+              } mb-4 cursor-pointer`}
               key={chats._id}
             >
               <div className="flex items-center justify-center">
@@ -101,7 +99,8 @@ function MainChat({
                       Hello,
                     </p>
                     <p className="text-gray-600 mb-2 sm:mb-4 sm:block hidden">
-                      You have received a Meet link. Please click the button below to join the meeting:
+                      You have received a Meet link. Please click the button
+                      below to join the meeting:
                     </p>
                     <p
                       onClick={() => navigateTo(chats.text)}
@@ -110,7 +109,8 @@ function MainChat({
                       Join Meeting
                     </p>
                     <p className="text-gray-600 mt-2 sm:mt-4 sm:block hidden">
-                      If the button above does not work, you can also copy and paste the following link into your browser:
+                      If the button above does not work, you can also copy and
+                      paste the following link into your browser:
                     </p>
                     <p className="text-gray-600 break-words sm:block hidden">
                       {chats.text.substring(0, 60)}

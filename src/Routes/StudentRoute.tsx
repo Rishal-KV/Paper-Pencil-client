@@ -18,19 +18,10 @@ import Favourite from "../Pages/Students/FavouritePage";
 import PurachseHistoryPage from "../Pages/Students/OrderHistoryPage";
 import NotFound from "../Pages/Students/NotFound";
 
-import { useSelector } from "react-redux";
-import { studentType } from "../Interface/interfaces";
-import { useEffect } from "react";
-function StudentRoute() {
-  const student = useSelector((state: studentType) => state.student.student);
-  useEffect(() => {
-    initSocket(student?._id as string);
-   
 
-    return () => {
-      socket.disconnect();
-    };
-  }, []);
+function StudentRoute() {
+
+ 
   return (
     <Routes>
       <Route path="/" element={<Home />} />
@@ -113,7 +104,7 @@ function StudentRoute() {
           </IsLoggedIn>
         }
       />
-    
+
       <Route path="*" Component={NotFound} />
     </Routes>
   );
