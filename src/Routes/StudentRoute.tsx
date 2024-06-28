@@ -4,7 +4,7 @@ import Login from "../Pages/Students/Login";
 import Signup from "../Pages/Students/SignUp";
 import IsLoggout from "../Middleware/Student/IsLoggedOut";
 import IsLoggedIn from "../Middleware/Student/IsLoggedIn";
-import { initSocket, socket } from "../Config/socket";
+
 import ForgotPassword from "../Pages/Students/ForgotPassword";
 import SetPassword from "../Pages/Students/SetPassword";
 import Course from "../Pages/Students/Course";

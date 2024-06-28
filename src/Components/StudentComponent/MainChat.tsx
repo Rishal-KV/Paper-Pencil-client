@@ -18,7 +18,11 @@ function MainChat({
   const student = useSelector((state: studentType) => state.student.student);
   const sender = student._id;
   const [conversation, setConversation] = useState<any[]>([]);
-
+  useEffect(() => {
+    
+      initSocket(student?._id as string);
+    
+  }, []);
   useEffect(() => {
     studentAPi.getConversation(conversationId).then((res) => {
       setConversation(res.response);
