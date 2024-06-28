@@ -30,7 +30,7 @@ const adminAPI = {
       throw error;
     }
   },
-  students: async (page:number) => {
+  students: async (page?:number) => {
     try {
       let studentResponse = await axiosInstance.get(`/admin/student_details?page=${page}`);
       return studentResponse;
@@ -48,7 +48,7 @@ const adminAPI = {
       throw error;
     }
   },
-  instructors: async (page:number) => {
+  instructors: async (page?:number) => {
     try {
       let instructors = await axiosInstance.get(`/admin/instructor_details?page=${page}`);
       return instructors;
@@ -98,7 +98,7 @@ const adminAPI = {
       throw error;
     }
   },
-  fetchCourse: async (page:number) => {
+  fetchCourse: async (page?:number) => {
     try {
       let response = await axiosInstance.get(`/admin/course?page=${page}`);
       return response;
