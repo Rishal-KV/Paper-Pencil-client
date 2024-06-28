@@ -460,7 +460,7 @@ const instructorAPI = {
     newPassword: string
   ) => {
     try {
-      const response = await axiosInstance.patch("/student/changepassword", {
+      const response = await axiosInstance.patch("/instructor/change-password", {
         email,
         password,
         newPassword,

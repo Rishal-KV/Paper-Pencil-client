@@ -2,12 +2,12 @@ import { useFormik } from "formik";
 import changePasswordSchema from "../../Validations/Instructor/changePasswordSchema";
 
 import { useSelector } from "react-redux";
-import { studentType } from "../../Interface/interfaces";
+import { InstructorType } from "../../Interface/interfaces";
 import { toast } from "sonner";
 import instructorAPI from "../../API/instructor";
 
 const ChangePassword: React.FC = () => {
-  const student = useSelector((state: studentType) => state.student);
+  const instructor = useSelector((state: InstructorType) => state.instructor);
   const formik = useFormik({
     initialValues: {
       currentPassword: "",
@@ -18,7 +18,7 @@ const ChangePassword: React.FC = () => {
     onSubmit: ({ currentPassword, newPassword }) => {
       instructorAPI
         .changePassword(
-          student.student.email as string,
+          instructor.instructor.email as string,
           currentPassword,
           newPassword
         )
