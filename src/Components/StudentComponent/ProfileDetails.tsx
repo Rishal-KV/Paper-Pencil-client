@@ -110,6 +110,7 @@ function ProfileDetails() {
                       onChange={selectImage}
                       id="upload_profile"
                       hidden
+                      accept="image/png, image/gif, image/jpeg"
                     />
                     <label htmlFor="upload_profile">
                       <svg

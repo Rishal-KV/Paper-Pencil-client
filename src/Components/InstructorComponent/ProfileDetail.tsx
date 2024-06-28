@@ -96,6 +96,7 @@ function ProfileDetail() {
                 >
                   <div className="bg-white/90 rounded-full w-6 h-6 text-center ml-28 mt-4">
                     <input
+                       accept="image/png, image/gif, image/jpeg"
                       type="file"
                       name="profile"
                       onChange={selectImage}
