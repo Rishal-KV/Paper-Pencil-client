@@ -271,6 +271,7 @@ function AddCourse({
                   </label>
 
                   <img
+                
                     width={150}
                     onClick={clickImage}
                     src={`${croppedImage ? URL.createObjectURL(croppedImage) : "https://img.freepik.com/free-vector/illustration-gallery-icon_53876-27002.jpg?t=st=1719424317~exp=1719424917~hmac=0edf3d7ae44236fa46bd38cbdd34e1ada2b7fbe35bd4ba0d89c2947bc658be57"}`}
@@ -278,7 +279,7 @@ function AddCourse({
                     alt="image description"
                   />
                 </figure>
-                <input id="image" name="image"  onBlur={handleBlur} onChange={selectImage} ref={selectRef} type="file" hidden />
+                <input accept="image/png, image/gif, image/jpeg" id="image" name="image"  onBlur={handleBlur} onChange={selectImage} ref={selectRef} type="file" hidden />
               </div>
               {errors.image && touched.image ? (
                 <p className="text-orange-400 ml-3">{errors.image}</p>

@@ -1,5 +1,8 @@
 import * as Yup from 'yup';
 
+// Supported image MIME types
+const SUPPORTED_FORMATS = ['image/jpg', 'image/jpeg', 'image/gif', 'image/png'];
+
 const courseValidationSchema = Yup.object().shape({
     name: Yup.string()
         .trim() // Trim leading and trailing whitespace
@@ -15,7 +18,13 @@ const courseValidationSchema = Yup.object().shape({
         .matches(/\S+/, 'Description cannot be empty or consist solely of whitespace') // Ensures description is not empty or just spaces
         .required('Description is required'),
     image: Yup.mixed()
-        .required('Image is required'),
+        .required('Image is required')
+        .test('fileFormat', 'Unsupported Format', (value) => {
+            if (value instanceof File) {
+                return SUPPORTED_FORMATS.includes(value.type);
+            }
+            return false;
+        }),
     category: Yup.string()
         .trim() // Trim leading and trailing whitespace
         .matches(/\S+/, 'Category cannot be empty or consist solely of whitespace') // Ensures category is not empty or just spaces

@@ -424,6 +424,7 @@ function AddChapters() {
                     />
                   </figure>
                   <input
+                  accept="image/png, image/gif, image/jpeg"
                     onChange={changeImage}
                     ref={imageRef}
                     type="file"
