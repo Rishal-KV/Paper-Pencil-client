@@ -119,7 +119,7 @@ function CourseList() {
                         </span>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
-                       <button  onClick={()=>navigate(`/instructor/enrollments/${course._id}`)} className="btn text-white">View</button>
+                       <button  onClick={()=>navigate(`/instructor/enrollments/${course._id}`)} className="btn  dark:text-white ">View</button>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
                         <button onClick={()=>publish(course._id as string)} className="text-slate-800 hover:text-blue-600 text-sm bg-white hover:bg-slate-100 border border-slate-200 rounded-l-lg font-medium px-4 py-2 inline-flex space-x-1 items-center">
@@ -173,7 +173,7 @@ function CourseList() {
                               alt="view-file"
                             />
                           </span>
-                          <span className="hidden md:inline-block">View</span>
+                          <span className="hidden md:inline-block ">View</span>
                         </button>
                       </td>
                     </tr>

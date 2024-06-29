@@ -10,7 +10,7 @@ function Chapter({ chapter, chapterLoad, setChapterLoad }: any) {
         <div
           data-modal-target={`edit-chapter${_id}`}
           data-modal-toggle={`edit-chapter${_id}`}
-          className="cursor-pointer px-10 mt-3  border-2 border-green-400 text-center rounded-md text-base-100"
+          className="cursor-pointer px-10 mt-3 text-black  border-2 border-green-400 text-center rounded-md dark:text-base-100"
         >
           Edit
         </div>

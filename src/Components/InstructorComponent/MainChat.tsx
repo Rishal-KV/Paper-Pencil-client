@@ -100,7 +100,7 @@ function MainChat({
   return (
     <div className="flex flex-col h-screen bg-white">
       {receiver && (
-        <header className="bg-base-100 p-4 fle text-gray-700 flex  items-center justify-between">
+        <header className="bg-gray-700 dark:bg-base-100 p-4 fle text-gray-700 flex  items-center justify-between">
           <h1 className="text-2x text-white font-semibold">
             {userInfo?.name.toUpperCase()}
           </h1>
@@ -135,7 +135,7 @@ function MainChat({
               /> */}
               </div>
               <div ref={messagesEndRef} className="flex flex-col max-w-96">
-                <div className="bg-base-100 rounded-lg p-3 mb-1">
+                <div className="dark:bg-base-100 bg-gray-700 rounded-lg p-3 mb-1">
                   {chat.text.slice(0, 4) == "https" ? (
                     <a className="text-white" href={chat.text}>
                       {chat.text}

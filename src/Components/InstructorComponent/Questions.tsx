@@ -31,7 +31,7 @@ const Questions: React.FC = () => {
         <div className="p-4  bg-white">
             <div className="p-4 h-screen">
                 <div className="grid grid-cols-1 gap-4 mb-4">
-                    <div data-modal-target="crud-modal" data-modal-toggle="crud-modal" className="flex items-center justify-center rounded bg-base-100 h-28 dark:bg-gray-800">
+                    <div data-modal-target="crud-modal" data-modal-toggle="crud-modal" className="flex items-center justify-center rounded dark:bg-base-100 h-28 bg-gray-700">
                         <FontAwesomeIcon className="text-2xl text-white" icon={faPlusCircle} />
                         <p className="font-bold ml-2 text-white">Add Question</p>
                     </div>
@@ -52,7 +52,7 @@ const Questions: React.FC = () => {
                                         {ques.question}
                                     </th>
                                     <td className="px-6 py-4">
-                                        <button onClick={() => delete_question(ques._id as string)} className="btn bg-base-100">
+                                        <button onClick={() => delete_question(ques._id as string)} className="btn bg-gray-700 dark:bg-base-100">
                                             <MdDelete className="text-white" size={20} />
                                         </button>
                                     </td>

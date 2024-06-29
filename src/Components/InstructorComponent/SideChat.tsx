@@ -70,7 +70,7 @@ function SideChat({ chatId }: { chatId: string }) {
     <button
   onClick={() => navigate(-1)}
   type="button"
-  className="flex items-center justify-center w-full sm:w-auto px-4 sm:px-5 py-2 text-sm sm:text-base text-gray-700 transition-colors duration-200 bg-base-100 border rounded-lg gap-x-2   dark:border-gray-700"
+  className="flex items-center justify-center w-full sm:w-auto px-4 sm:px-5 py-2 text-sm sm:text-base text-gray-700 transition-colors duration-200 bg-gray-700 dark:bg-base-100 border rounded-lg gap-x-2   dark:border-gray-700"
 >
   <svg
     className="w-5 h-5 sm:w-6 sm:h-6 rtl:rotate-180 text-white"

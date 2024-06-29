@@ -206,7 +206,7 @@ function AddChapters() {
                 </p>
 
                 <button
-                  className="flex select-none items-center gap-2 rounded-lg py-3 px-6 text-center align-middle font-sans text-xs bg-base-100 text-white font-bold uppercase  transition-all hover:bg-base-100 hover:text-white  disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+                  className="bg-gray-700 flex select-none items-center gap-2 rounded-lg py-3 px-6 text-center align-middle font-sans text-xs dark:bg-base-100 text-white font-bold uppercase  hover:bg-gray-700 transition-all hover:bg-base-100 hover:text-white  disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
                   type="button"
                   data-modal-target={`editcourse${course?._id}`}
                   data-modal-toggle={`editcourse${course?._id}`}
@@ -240,7 +240,7 @@ function AddChapters() {
               <button
                 data-modal-target="crud-modal"
                 data-modal-toggle="crud-modal"
-                className="bg-base-100 text-white px-5 font-bold rounded-lg py-2"
+                className="dakr:bg-base-100 bg-gray-700 text-white px-5 font-bold rounded-lg py-2"
               >
                 Add
               </button>
@@ -259,7 +259,7 @@ function AddChapters() {
                   onClick={() => setChapterId(chapter._id as string)}
                   data-modal-target="add-lesson"
                   data-modal-toggle="add-lesson"
-                  className="btn btn-base text-white font-Poppins"
+                  className="btn btn-base bg-gray-700 text-white font-Poppins"
                 >
                   Add lesson
                 </button>
@@ -297,9 +297,9 @@ function AddChapters() {
         className="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full"
       >
         <div className="relative p-4 w-full max-w-md max-h-full">
-          <div className="relative bg-white rounded-lg shadow dark:bg-gray-700">
+          <div className="relative rounded-lg shadow  dark:bg-base-100 bg-gray-700">
             <div className="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
-              <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+              <h3 className="text-lg font-semibold  text-white dark:text-white">
                 Edit Course
               </h3>
               <button
@@ -333,7 +333,7 @@ function AddChapters() {
                 <div className="col-span-2">
                   <label
                     htmlFor="name"
-                    className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                    className="block mb-2 text-sm font-medium text-white"
                   >
                     Name
                   </label>
@@ -354,7 +354,7 @@ function AddChapters() {
                 <div className="col-span-2 sm:col-span-1">
                   <label
                     htmlFor="price"
-                    className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                    className="block mb-2 text-sm font-medium text-gray-900 text-white"
                   >
                     Price
                   </label>
@@ -374,7 +374,7 @@ function AddChapters() {
                 <div className="col-span-2 sm:col-span-1">
                   <label
                     htmlFor="category"
-                    className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                    className="block mb-2 text-sm font-medium text-gray-900 text-white"
                   >
                     Category
                   </label>
@@ -404,7 +404,7 @@ function AddChapters() {
                   <figure className="max-w-lg">
                     <label
                       htmlFor="price"
-                      className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                      className="block mb-2 text-sm font-medium text-gray-900 text-white"
                     >
                       Image
                     </label>
@@ -434,7 +434,7 @@ function AddChapters() {
                 <div className="col-span-2">
                   <label
                     htmlFor="description"
-                    className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                    className="block mb-2 text-sm font-medium text-white"
                   >
                     Course Description
                   </label>
@@ -455,7 +455,7 @@ function AddChapters() {
               </div>
               <button
                 type="submit"
-                className="text-white  bg-base-100 inline-flex items-center focus:ring-4 focus:outlin font-bold rounded-lg text-sm px-5 py-2.5 text-center "
+                className="text-black   bg-white  inline-flex items-center focus:ring-4 focus:outlin font-bold rounded-lg text-sm px-5 py-2.5 text-center "
               >
                 <svg
                   className="me-1 -ms-1 w-5 h-5"

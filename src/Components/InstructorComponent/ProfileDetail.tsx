@@ -218,16 +218,16 @@ function ProfileDetail() {
                     />
                   </div>
                 </div>
-                <h2 className="text-xl  mb-4 font-Poppins text-gray-500">About Me</h2>
+                <h2 className="text-xl  mb-4 font-Poppins text-gray-700">About Me</h2>
                 <p className="text-gray-700">{instructor.instructor.about}</p>
 
-                <h2 className="text-xl font-Poppins mt-6 mb-4 text-gray-500">
+                <h2 className="text-xl font-Poppins mt-6 mb-4 text-gray-700">
                   Recently created courses
                 </h2>
                 {latestCourse.splice(0, 4).map((course: Course) => (
                   <div className="mb-6">
                     <div className="flex justify-between flex-wrap gap-2 w-full">
-                      <span className="text-gray-700 font-bold">
+                      <span className="text-gray-700 ">
                         {course.name}
                       </span>
                       <p>

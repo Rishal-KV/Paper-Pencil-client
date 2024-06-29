@@ -106,7 +106,7 @@ const ChangePassword: React.FC = () => {
 
                 <div className="flex justify-end">
                   <button
-                    className="py-1.5 px-3 m-1 font-Poppins text-center bg-base-100 border rounded-md text-white  hover:bg-base-100 hover:text-gray-100 dark:text-gray-200 dark:bg-violet-700"
+                    className="py-1.5 px-3 m-1 font-Poppins text-center dakr:bg-base-100 border rounded-md text-white  hover:text-gray-100 dark:text-gray-200 bg-gray-700"
                     type="submit"
                   >
                     Save changes

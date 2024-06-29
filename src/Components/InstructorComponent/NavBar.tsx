@@ -16,7 +16,7 @@ function Navbar() {
   };
 
   return (
-    <div className="navbar bg-base-100 sticky top-0 z-50">
+    <div className="navbar bg-gray-700 dark:bg-base-100 sticky top-0 z-50">
   <div className="flex-1">
     <img onClick={()=>navigate('/instructor')} className="btn btn-ghost text-xl" src="/../images/PaperPencil.png" />
   </div>

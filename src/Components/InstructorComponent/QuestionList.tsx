@@ -63,7 +63,7 @@ const QuestionList: React.FC = () => {
                               `/instructor/questionmanagement/${course._id}`
                             )
                           }
-                          className="btn btn-sm  bg-base-100"
+                          className="btn btn-sm  bg-gray-700 dark:bg-base-100"
                         >
                           <FontAwesomeIcon className="text-white" icon={faEye} />
                         </button>
