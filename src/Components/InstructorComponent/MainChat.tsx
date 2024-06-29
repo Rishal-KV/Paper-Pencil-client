@@ -26,9 +26,9 @@ function MainChat({
   
     
   
-    return ()=>{
-      socket.disconnect()
-    }
+    // return ()=>{
+    //   socket.disconnect()
+    // }
   
    
    },[])
