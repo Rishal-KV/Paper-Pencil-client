@@ -21,7 +21,7 @@ export interface Course {
   instructor?: Instructor;
   approved?: Boolean;
   listed?: Boolean;
-  image?: string | undefined | Blob ;
+  image?: string | undefined ;
   adminVerified?: boolean;
   publish?: boolean;
   questions?: string[];

@@ -55,7 +55,7 @@ function CourseDetails() {
               <div className="relative m-0  md:w-2/5   shrink-0 overflow-hidden rounded-xl md:rounded-r-none bg-white bg-clip-border text-gray-700">
                 <img
                   src={
-                    chapters && chapters[0].course && chapters[0].course.image
+                    chapters && chapters[0].course?.image && chapters[0].course.image
                   }
                   alt="Course Image"
                 />
