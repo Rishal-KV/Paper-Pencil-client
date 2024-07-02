@@ -4,7 +4,7 @@
 function Search({ setSearch }: any ) {
   return (
     <>
-      <form className="w-63 ">
+   
         <label
           htmlFor="default-search"
           className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white"
@@ -44,7 +44,7 @@ function Search({ setSearch }: any ) {
           />
         
         </div>
-      </form>
+
     </>
   );
 }
