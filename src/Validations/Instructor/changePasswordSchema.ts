@@ -9,7 +9,9 @@ const changePasswordSchema = Yup.object().shape({
     .required('New password is required')
     .min(8, 'Password must be at least 8 characters long')
     .notOneOf([Yup.ref('currentPassword')], 'New password must be different from current password')
-    .matches(/^\S.*$/, 'New password cannot be empty or only whitespace'),
+    .matches(/^\S.*$/, 'New password cannot be empty or only whitespace')
+    .matches(/[A-Z]/, 'New password must contain at least one uppercase letter')
+    .matches(/[!@#$%^&*(),.?":{}|<>]/, 'New password must contain at least one special character'),
 
   confirmNewPassword: Yup.string()
     .required('Please confirm your new password')

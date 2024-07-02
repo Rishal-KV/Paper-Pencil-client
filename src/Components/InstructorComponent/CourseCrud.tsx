@@ -52,7 +52,7 @@ function AddChapters() {
     },
     validationSchema: editCourseValidationSchema,
     onSubmit: (courseData: Course) => {
-      instructorAPI.updateCOurse(id, courseData).then((res) => {
+      instructorAPI.updateCourse(id, courseData).then((res) => {
         if (res?.data.status) {
           if (closeRef.current) {
             closeRef.current.click();

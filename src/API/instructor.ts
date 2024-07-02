@@ -307,41 +307,54 @@ const instructorAPI = {
       throw error;
     }
   },
-  updateCOurse: async (
+   updateCourse  :async (
     courseId: string | undefined,
     courseData: Course | undefined
   ) => {
-    console.log(courseData, "courseDataata");
-
-    if (typeof courseData?.image != "string" && courseData?.image) {
-      console.log("not string");
-
-      const formData = new FormData();
-
-      formData.append("name", courseData?.name as string);
-      formData.append("price", courseData?.price as unknown as string);
-      formData.append("description", courseData?.description as string);
-      formData.append("category", courseData?.category as string);
-      formData.append("image", courseData?.image as Blob);
-      formData.append("courseId", courseId as string);
-      const response = await axiosInstance.patch(
-        "/instructor/update_course",
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
-
-      return response;
-    }
-
+    console.log(courseData, "courseData");
+  
     try {
+      if (typeof courseData?.image !== "string" && courseData?.image) {
+        console.log("not string");
+  
+        const formData = new FormData();
+        formData.append("name", courseData?.name as string);
+        formData.append("price", courseData?.price as unknown as string);
+        formData.append("description", courseData?.description as string);
+        formData.append("category", courseData?.category as string);
+        formData.append("image", courseData?.image as Blob);
+        formData.append("courseId", courseId as string);
+  
+        const response = await axiosInstance.patch(
+          "/instructor/update_course",
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        );
+  
+        return response;
+      } else {
+        const response = await axiosInstance.patch(
+          "/instructor/update_course",
+          { ...courseData, courseId },
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
+  
+        return response;
+      }
     } catch (error) {
+      console.error("Error updating course:", error);
       throw error;
     }
   },
+  
   enrollments: async (id: string) => {
     try {
       const response = await axiosInstance.get(

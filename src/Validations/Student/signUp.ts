@@ -11,6 +11,8 @@ const instructorSignUpSchema = yup.object().shape({
     password: yup.string()
         .min(8, 'Password must be at least 8 characters')
         .matches(/^\S.*\S$/, 'Password cannot be empty or consist solely of whitespace') // Ensures password is not empty or just spaces
+        .matches(/[A-Z]/, 'Password must contain at least one uppercase letter') // Ensure password contains at least one uppercase letter
+        .matches(/[!@#$%^&*(),.?":{}|<>]/, 'Password must contain at least one special character') // Ensure password contains at least one special character
         .required('Password is required'),
     confirmPassword: yup.string()
         .oneOf([yup.ref('password')], 'Passwords must match')
