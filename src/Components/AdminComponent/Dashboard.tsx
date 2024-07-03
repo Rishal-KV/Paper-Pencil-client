@@ -10,6 +10,7 @@ const Dashboard: React.FC = () => {
   const [courses, setCourses] = useState<number>();
   const [instructor, setInstructor] = useState<number>();
   const [student, setStudent] = useState<number>();
+  console.log(instructor,"insns")
   useEffect(() => {
     async function fetch() {
       try {
@@ -19,10 +20,10 @@ const Dashboard: React.FC = () => {
             adminAPI.instructors(),
             adminAPI.students(),
           ]);
-
+console.log(instructorResponse,"course")
         setCourses(courseResponse.data.course.length);
-        setInstructor(instructorResponse.data.length);
-        setStudent(studentResponse.data.length)
+        setInstructor(instructorResponse.data.instructor.length);
+        setStudent(studentResponse.data.student.length)
       
         
       } catch (error) {}
